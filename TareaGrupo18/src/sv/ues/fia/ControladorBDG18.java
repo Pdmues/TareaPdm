@@ -3,6 +3,7 @@ package sv.ues.fia;
 
 import sv.ues.fia.institucion.Institucion;
 import sv.ues.fia.especialidad.Especialidad;
+import sv.ues.fia.evaluacionetapa.EvaluacionEtapa;
 import sv.ues.fia.tipoespecialidad.TipoEspecialidad;
 import sv.ues.fia.trabajograduacion.TrabajoGraduacion;
 import android.content.ContentValues;
@@ -25,7 +26,8 @@ public class ControladorBDG18
 			{"NTG","NPERFIL","PORCENAVANCE"};
 	private static final String[]camposTipoEspecialidad = new String []
 			{"IDTIPOESPECIALIDAD","NOMBREESPECIALIDAD"};
-
+    private static final String[]camposEvaluacionEtapa=new String[]
+    		{"NETAPA","CARNET","NOTA"};
 	public ControladorBDG18(Context ctx) 
 	{
 		this.context = ctx;
@@ -86,6 +88,14 @@ public class ControladorBDG18
 						   "IDBITACORA      	INTEGER             not null PRIMARY KEY,"+
 						   "CARNET				VARCHAR(20)			NOT NULL"+
 						");");
+				//Registro Evaluacion Etapa 
+				db.execSQL("create table EVALUACIONETAPA"+
+				        "("+
+						   "NETAPA               INTEGER            NOT NULL,"+
+						   "CARNET               VARCHAR(7)         NOT NULL,"+
+						   "NOTA                 NUMERIC            NOT NULL,"+
+						   "PRIMARY KEY (NETAPA,CARNET) );"
+						   );
 			}
 			catch(SQLException e)
 			{
@@ -183,7 +193,27 @@ public class ControladorBDG18
 		}
 		return regInsertados;
 	}
-	
+	//insercion evaluacion etapa
+	public String insertar(EvaluacionEtapa evetapa)
+	{
+		String regInsertados="Registro Insertado Nº= ";
+		long contador=0;
+		ContentValues evaluacione=new ContentValues();
+		evaluacione.put("NETAPA",evetapa.getNetapa());
+		evaluacione.put("CARNET", evetapa.getCarnet());
+		evaluacione.put("NOTA", evetapa.getNota());
+		contador=db.insert("EVALUACIONETAPA", null, evaluacione);
+		if(contador==-1||contador==0)
+		{
+		regInsertados="Error al Insertar el registro, Registro Duplicado. Verificar inserción";	
+		}
+		else
+		{
+			regInsertados=regInsertados+contador;
+		}
+		return regInsertados;
+	}
+	//fin
 	public Institucion consultarInstitucion(String codigoinst)
 	{
 		String[] id = {codigoinst};
@@ -251,6 +281,23 @@ public class ControladorBDG18
 		{
 			return null;
 		}
+	}
+	//consultar EvaluacionEtapa
+	public EvaluacionEtapa consultarEvaluacionEtapaString(String codigo_netapa,String codigo_carnet)
+	{
+
+	String []id={codigo_netapa+","+codigo_carnet};
+	Cursor cursor=db.query("EVALUACIONETAPA", camposEvaluacionEtapa, "NETAPA =?"+","+"CARNET=?", id, null, null, null);
+	if(cursor.moveToFirst())
+	{
+		EvaluacionEtapa evaetapa=new EvaluacionEtapa();
+		evaetapa.setNetapa(cursor.getInt(0));
+		evaetapa.setCarnet(cursor.getString(1));
+		evaetapa.setNota(cursor.getDouble(2));
+		return evaetapa;
+		
+	}else
+	return null;
 	}
 
 	public String eliminar(Institucion institucion)
