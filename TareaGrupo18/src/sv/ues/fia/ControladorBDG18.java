@@ -7,10 +7,6 @@ import sv.ues.fia.especialidad.Especialidad;
 import sv.ues.fia.evaluacionetapa.EvaluacionEtapa;
 import sv.ues.fia.facultad.Facultad;
 import sv.ues.fia.perfil.Perfil;
-import sv.ues.fia.facultad.Facultad;
-import sv.ues.fia.perfil.Perfil;
-import sv.ues.fia.facultad.Facultad;
-import sv.ues.fia.perfil.Perfil;
 import sv.ues.fia.tipoespecialidad.TipoEspecialidad;
 import sv.ues.fia.trabajograduacion.TrabajoGraduacion;
 import android.content.ContentValues;
@@ -103,6 +99,28 @@ public class ControladorBDG18
 						   "NOTA                 NUMERIC            NOT NULL,"+
 						   "PRIMARY KEY (NETAPA,CARNET) );"
 						   );
+
+				//Registro de carrera	
+				db.execSQL("create table CARRERA"+ 
+						"("+
+						   "IDCARRERA  		       VARCHAR2(15)              not null PRIMARY KEY,"+
+						   "NOMBCARRERA            VARCHAR2(50)         not null"+
+						");");
+				
+				//Registro de perfil
+				db.execSQL("create table PERFIL"+ 
+						"("+
+						   "NPERFERFIL  		 INTEGER           not null PRIMARY KEY,"+
+						   "ESTADO            	VARCHAR2(10)         not null"+
+						   "OBSERVACIONES		VARCHAR2(50)		 not null"+
+						");");
+				
+				//Registro de facultad
+				db.execSQL("create table FACULTAD"+ 
+						"("+
+						   "IDFACULTAD  		    VARCHAR2(50)          not null PRIMARY KEY,"+
+						   "NOMBFACULTAD            VARCHAR2(50)         not null"+
+						");");
 
 				//Registro de carrera	
 				db.execSQL("create table CARRERA"+ 
@@ -561,6 +579,19 @@ public class ControladorBDG18
 			return "Registro con el codigo " + especialidad.getIdEspecialidad() + " no existe";
 		}
 	}
+	public String actualizar(TipoEspecialidad tespecialidad){
+		if(verificarIntegridad(tespecialidad, 5)){
+			String[] id = {tespecialidad.getIDespecialidad()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("IDTIPOESPECIALIDAD",tespecialidad.getIDespecialidad());
+			cv.put("NOMBREESPECIALIDAD", tespecialidad.getNombreEspecialidad());
+			db.update("TIPOESPECIALIDAD", cv, "IDTIPOESPECIALIDAD = ?", id);
+			return "Registro Actualizado Correctamente";
+		}else{
+			return "Registro con CODIGO de especialidad " + tespecialidad.getIDespecialidad()
+					+ " no existe";
+		}
+	}
 	
 
 	public String actualizar(TrabajoGraduacion tgraduacion)
@@ -651,7 +682,7 @@ public class ControladorBDG18
 				TipoEspecialidad tespecialidad = (TipoEspecialidad)dato;
 				String[] id={tespecialidad.getIDespecialidad()+""};
 				abrir();
-				Cursor c3=db.query("TIPOESPECIALIDAD",null,"IDESPECIALIDAD=?",id,null,null,null);
+				Cursor c3=db.query("TIPOESPECIALIDAD",null,"IDTIPOESPECIALIDAD=?",id,null,null,null);
 				if(c3.moveToFirst())
 				{
 					//Se encontro IDESPECIALIDAD
