@@ -1,25 +1,39 @@
 package sv.ues.fia.tipoespecialidad;
 
+import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
-import sv.ues.fia.R.layout;
-import sv.ues.fia.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class TipoEspecialidadModificar extends Activity {
+	ControladorBDG18 helper;
+	EditText editIDEspecialidad;
+	EditText editnomespecialidad;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tipo_especialidad_modificar);
+		helper = new ControladorBDG18(this);
+		editIDEspecialidad = (EditText) findViewById(R.id.editIDEspecialidad);
+		editnomespecialidad = (EditText) findViewById(R.id.editnomespecialidad);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.tipo_especialidad_modificar, menu);
-		return true;
+	public void modificarTipoEspecialidad(View v) {
+		TipoEspecialidad tespecialidad = new TipoEspecialidad();
+		tespecialidad.setIDespecialidad(Integer.parseInt(editIDEspecialidad.getText().toString()));
+		tespecialidad.setNombreEspecialidad(editnomespecialidad.getText().toString());
+		helper.abrir();
+		String estado = helper.actualizar(tespecialidad);
+		helper.cerrar();
+		Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
 	}
-
+	
+		public void limpiarTexto(View v) {
+		editIDEspecialidad.setText("");
+		editnomespecialidad.setText("");
+		}
 }

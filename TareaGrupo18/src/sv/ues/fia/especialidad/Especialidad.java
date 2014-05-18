@@ -4,6 +4,7 @@ public class Especialidad
 {
 	private int idEspecialidad=0;
 	private String idmaestro="";
+	
 	public int getIdEspecialidad() 
 	{
 		return idEspecialidad;

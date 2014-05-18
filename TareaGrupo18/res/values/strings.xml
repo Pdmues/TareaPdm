@@ -95,7 +95,14 @@
     <string name="nperfil">Numero de Perfil</string><string name="pavance">Porcentaje de Avance</string>
     <string name="nombreespecialidad">Nombre de especialidad</string>
     <string name="NotaEtapa">Nota</string>
-  
+    <string name="ccarrera">Codigo de la carrera</string>
+    <string name="Ncarr">Nombre de la carrera</string>
+    <string name="CFacultad">Codigo de la facultad</string>
+    <string name="NFacultad">Nombre de la facultad</string>
+    <string name="perfil">Numero de perfil</string>
+    <string name="estado">Estado del perfil</string>
+    <string name="observaciones">Observaciones</string>
+    
     
     
 
