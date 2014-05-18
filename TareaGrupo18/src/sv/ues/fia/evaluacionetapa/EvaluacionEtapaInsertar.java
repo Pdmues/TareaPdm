@@ -1,8 +1,6 @@
 package sv.ues.fia.evaluacionetapa;
 
 import sv.ues.fia.R;
-import sv.ues.fia.R.layout;
-import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -21,22 +19,27 @@ public class EvaluacionEtapaInsertar extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_evaluacion_etapa_insertar);
 		helper=new ControladorBDG18(this);
-		numeroetapainsertar=(EditText)findViewById(R.id.netapa);
+		numeroetapainsertar=(EditText)findViewById(R.id.editNEtapa);
 		carnetinsertar= (EditText)findViewById(R.id.editEvaluacionEtapaCarnet);
-		notaetapainsertar=(EditText)findViewById(R.id.editNotaEvaluacionEtapaInsertar);
+	    notaetapainsertar=(EditText)findViewById(R.id.editNotaEvaluacionEtapaInsertar);
 	}
 
 	public void InsertarEvaluacionEtapa(View v){
 		String numeroetapa=numeroetapainsertar.getText().toString();
 		String carnet=carnetinsertar.getText().toString();
 		String nota=notaetapainsertar.getText().toString();
+		Toast.makeText(this, numeroetapa, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, carnet, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, nota, Toast.LENGTH_SHORT).show();
 		String insertados;
 		EvaluacionEtapa eva=new EvaluacionEtapa();
 		eva.setNetapa(Integer.parseInt(numeroetapa));
 		eva.setCarnet(carnet);
-		eva.setNota(Integer.parseInt(nota));
+		eva.setNota(Double.parseDouble(nota));
 		helper.abrir();
-		//insertados=helper.in
+		insertados=helper.insertar(eva);
+		helper.cerrar();
+		Toast.makeText(this, insertados, Toast.LENGTH_SHORT).show();
 		
 	}
 	public void limpiarEvaluacionEtapaInsertar(){
