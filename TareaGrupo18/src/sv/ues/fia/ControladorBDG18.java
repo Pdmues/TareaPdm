@@ -78,11 +78,11 @@ public class ControladorBDG18
 				db.execSQL("create table BITACORA"+
 						"("+
 						   "IDBITACORA      	INTEGER             not null PRIMARY KEY,"+
-						   "NTG             	VARCHAR2(20)        not null"+
-						   "QUIEN				VARCHAR2(50)		NOT NULL"+
-						   "LUGAR				VARCHAR(50)			NOT NULL"+
-						   "ETAPADESARROLLADA	INTEGER				NOT NULL"+
-						   "HORAINICIO			VARCHAR(20)			NOT NULL"+
+						   "NTG             	VARCHAR2(20)        not null,"+
+						   "QUIEN				VARCHAR2(50)		NOT NULL,"+
+						   "LUGAR				VARCHAR(50)			NOT NULL,"+
+						   "ETAPADESARROLLADA	INTEGER				NOT NULL,"+
+						   "HORAINICIO			VARCHAR(20)			NOT NULL,"+
 						   "HORAFIN				VARCHAR(20)			NOT NULL"+
 						");");
 				//Registro de bitacora
@@ -111,7 +111,7 @@ public class ControladorBDG18
 				db.execSQL("create table PERFIL"+ 
 						"("+
 						   "NPERFERFIL  		 INTEGER           not null PRIMARY KEY,"+
-						   "ESTADO            	VARCHAR2(10)         not null"+
+						   "ESTADO            	VARCHAR2(10)         not null,"+
 						   "OBSERVACIONES		VARCHAR2(50)		 not null"+
 						");");
 				
@@ -127,21 +127,6 @@ public class ControladorBDG18
 						"("+
 						   "IDCARRERA  		       VARCHAR2(15)              not null PRIMARY KEY,"+
 						   "NOMBCARRERA            VARCHAR2(50)         not null"+
-						");");
-				
-				//Registro de perfil
-				db.execSQL("create table PERFIL"+ 
-						"("+
-						   "NPERFERFIL  		 INTEGER           not null PRIMARY KEY,"+
-						   "ESTADO            	VARCHAR2(10)         not null"+
-						   "OBSERVACIONES		VARCHAR2(50)		 not null"+
-						");");
-				
-				//Registro de facultad
-				db.execSQL("create table FACULTAD"+ 
-						"("+
-						   "IDFACULTAD  		    VARCHAR2(50)          not null PRIMARY KEY,"+
-						   "NOMBFACULTAD            VARCHAR2(50)         not null"+
 						");");
 			}
 			catch(SQLException e)
