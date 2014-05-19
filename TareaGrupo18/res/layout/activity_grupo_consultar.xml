@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingTop="30dip"
+	android:stretchColumns="1" >
+
+    <TableRow>
+
+        <TextView
+            style="@style/estilo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Grupo" />
+
+        <EditText
+            android:id="@+id/editNumeroGrupoConsultar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10" />
+    </TableRow>
+
+    <TableRow>
+
+        <Button
+            android:id="@+id/GrupoConsultar"
+            android:text="@string/consultar" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            style="@style/estilo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/iddocente" />
+
+        <EditText
+            android:id="@+id/editIdDocenteConsultar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </TableRow>
+
+</TableLayout>
