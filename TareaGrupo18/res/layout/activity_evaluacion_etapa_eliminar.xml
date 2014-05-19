@@ -1,0 +1,41 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1"
+  tools:context=".EvaluacionEtapaEliminar" >
+
+   <TableRow>
+       <TextView 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/Numeroetapa"/>
+       <EditText 
+           android:id="@+id/editEvaluacionEtapaEliminarNumeroEtapa"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:inputType="number" />
+       
+   </TableRow>
+<TableRow >
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/carnet"/>
+    <EditText 
+        android:id="@+id/editEvaluacionEtapaEliminarCarnet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text" />
+    
+</TableRow>
+<TableRow >
+
+    <Button android:text="@string/eliminar" />
+
+</TableRow>
+
+</TableLayout>
