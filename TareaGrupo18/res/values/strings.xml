@@ -108,6 +108,8 @@
     <string name="EtapaDesarrollada">Etapa en desarrollo</string>
     <string name="horainicio">Hora de inicio</string>
     <string name="horafin">Hora de finalizacion</string>
+    <string name="Grupo">Numero de Grupo</string>
+    <string name="iddocente">Id Docente</string>
     
     
     
