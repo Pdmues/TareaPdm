@@ -102,6 +102,12 @@
     <string name="perfil">Numero de perfil</string>
     <string name="estado">Estado del perfil</string>
     <string name="observaciones">Observaciones</string>
+    <string name="cbitacora">Codigo de bitacora</string>
+    <string name="Quien">Quien</string>
+    <string name="Lugar">Lugar</string>
+    <string name="EtapaDesarrollada">Etapa en desarrollo</string>
+    <string name="horainicio">Hora de inicio</string>
+    <string name="horafin">Hora de finalizacion</string>
     
     
     

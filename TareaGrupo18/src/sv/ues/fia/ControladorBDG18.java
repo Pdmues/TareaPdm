@@ -2,6 +2,7 @@ package sv.ues.fia;
 
 
 import sv.ues.fia.institucion.Institucion;
+import sv.ues.fia.bitacora.Bitacora;
 import sv.ues.fia.carrera.Carrera;
 import sv.ues.fia.especialidad.Especialidad;
 import sv.ues.fia.evaluacionetapa.EvaluacionEtapa;
@@ -259,6 +260,25 @@ public class ControladorBDG18
 			regInsertados="Error al insertar el registro, Registro Duplicado. Verificar insercion";
 		}
 		else{
+			regInsertados=regInsertados+contador;
+		}
+		return regInsertados;
+	}
+	public String insertar(Bitacora bitacora){
+		String regInsertados="Registro Insertado N°= ";
+		long contador=0;
+		ContentValues btcr=new ContentValues();
+		btcr.put("IDBITACORA", bitacora.getIdbitacora());
+		btcr.put("NTG", bitacora.getNtg());
+		btcr.put("QUIEN", bitacora.getQuien());
+		btcr.put("LUGAR", bitacora.getLugar());
+		btcr.put("ETAPADESARROLLADA", bitacora.getEtapadesarrollada());
+		btcr.put("HORAINICIO", bitacora.getHorainicio());
+		btcr.put("HORAFIN", bitacora.getHorafin());
+		contador=db.insert("BITACORA", null, btcr);
+		if(contador==-1 || contador==0){
+			regInsertados="Error al insertar el registro, Registro Duplicado. Verificar insercion";
+		}else{
 			regInsertados=regInsertados+contador;
 		}
 		return regInsertados;
