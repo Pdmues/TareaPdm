@@ -696,6 +696,20 @@ public class ControladorBDG18
 				else{
 					return false;}
 			}
+			case 6:
+			{
+				//verificar que exista IDBitacora
+				Bitacora bita=(Bitacora)dato;
+				String[] id={bita.getIdbitacora()+""};
+				abrir();
+				Cursor c4=db.query("BITACORA", null, "IDBITACORA=?", id, null, null, null);
+				if(c4.moveToFirst()){
+					//Si existe
+					return true;
+				}else{
+					return false;
+				}
+			}
 			default:
 			return false;
 		}
