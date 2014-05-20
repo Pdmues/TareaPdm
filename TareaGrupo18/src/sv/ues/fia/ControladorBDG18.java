@@ -529,7 +529,18 @@ public class ControladorBDG18
 		}
 		return regAfectados;
 	}
-	
+	public String eliminar(Bitacora bitacora){
+		String regAfectados="filas afectadas= ";
+		int contador=0;
+		if(verificarIntegridad(bitacora,6)){
+			//borrar si existe
+			contador+=db.delete("BITACORA", "IDBITACORA='"+bitacora.getIdbitacora()+"'", null);
+			regAfectados+=contador;
+		}else{
+			regAfectados="0";
+		}
+		return regAfectados;
+	}
 
 	public String eliminar(Carrera carrera)
 	{
@@ -700,6 +711,23 @@ public class ControladorBDG18
 		}else{
 			return "Registro con CODIGO de especialidad " + tespecialidad.getIDespecialidad()
 					+ " no existe";
+		}
+	}
+	public String actualizar(Bitacora bitacora){
+		if(verificarIntegridad(bitacora,6)){
+			String[] id = {bitacora.getIdbitacora()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("IDBITACORA",bitacora.getIdbitacora());
+			cv.put("NTG",bitacora.getNtg());
+			cv.put("QUIEN",bitacora.getQuien());
+			cv.put("LUGAR",bitacora.getLugar());
+			cv.put("ETAPADESARROLLADA",bitacora.getEtapadesarrollada());
+			cv.put("HORAINICIO",bitacora.getHorainicio());
+			cv.put("HORAFIN",bitacora.getHorafin());
+			db.update("BITACORA", cv, "IDBITACORA = ?", id);
+			return "Registro actualizado correctamente";
+		}else{
+			return "Registro con codigo "+bitacora.getIdbitacora()+" no existe";
 		}
 	}
 	
