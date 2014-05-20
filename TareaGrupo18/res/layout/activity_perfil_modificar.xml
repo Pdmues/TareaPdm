@@ -1,16 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".PerfilModificar" >
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingTop="10dip"
+	android:stretchColumns="1" >
+	<TableRow>
+		<TextView android:text="@string/perfil" />
+		<EditText
+		    android:id="@+id/editCCperfil"
+		    android:inputType="number"
+		    android:maxLength="7" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-</RelativeLayout>
+	</TableRow>
+	<TableRow>
+		<TextView android:text="@string/estado" />
+		<EditText
+			android:id="@+id/editCCperf"
+			android:inputType="text"
+			android:maxLength="30" />
+	</TableRow>
+	
+	<TableRow>
+		<TextView android:text="@string/observaciones" />
+		<EditText
+			android:id="@+id/editCCper"
+			android:inputType="text"
+			android:maxLength="30" />
+	</TableRow>
+	
+	<TableRow>
+		<Button
+			android:onClick="actualizarPerfil"
+			android:text="@string/actualizar" />
+	</TableRow>
+	<TableRow>
+		<Button
+			android:onClick="limpiarTexto"
+			android:text="@string/limpiar" />
+	</TableRow>
+</TableLayout>

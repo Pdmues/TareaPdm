@@ -1,25 +1,47 @@
 package sv.ues.fia.perfil;
 
+import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
-import sv.ues.fia.R.layout;
-import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class PerfilConsultar extends Activity {
 
+	EditText editNperfil;
+	EditText editEperfil;
+	EditText editOperfil;
+	ControladorBDG18 helper;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_perfil_consultar);
+		helper = new ControladorBDG18(this);
+		editNperfil = (EditText) findViewById(R.id.editINPerfil);
+		editEperfil = (EditText) findViewById(R.id.editESTPer);
+		editOperfil = (EditText) findViewById(R.id.editOBSPer);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.perfil_consultar, menu);
-		return true;
+	public void consultarPerfil(View v) 
+	{
+		helper.abrir();
+		Perfil perfil=helper.consultarPerfil(editNperfil.getText().toString());
+		helper.cerrar();
+		if(perfil == null)
+		Toast.makeText(this, "El perfil con codigo " +	editNperfil.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
+		else
+		{
+			editEperfil.setText(perfil.getEstado().toString());
+			editOperfil.setText(perfil.getObservaciones().toString());
+		}
+	}
+	public void limpiarTexto(View v)
+	{
+		editEperfil.setText("");
+		editEperfil.setText("");
+		editEperfil.setText("");
 	}
 
 }

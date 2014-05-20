@@ -11,7 +11,7 @@
 
 		<EditText
 		    android:id="@+id/editIFacultad"
-		    android:inputType="number"
+		    android:inputType="text"
 		    android:maxLength="15" />
 
 		</TableRow>
@@ -22,7 +22,7 @@
 
 		<EditText
 		    android:id="@+id/editIFNomb"
-		    android:inputType="number"
+		    android:inputType="text"
 		    android:maxLength="50" />
 
 	</TableRow>

@@ -28,7 +28,7 @@ public class CarreraInsertar extends Activity {
 		String Ncarr= editNmcarr.getText().toString();
 		String regInsertados;
 		Carrera carrera=new Carrera();
-		carrera.setIdcarrera(Integer.parseInt(ccarrera));
+		carrera.setIdcarrera(ccarrera);
 		carrera.setNombcarrera(Ncarr);
 		helper.abrir();
 		regInsertados=helper.insertar(carrera);

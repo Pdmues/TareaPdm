@@ -2,6 +2,7 @@ package sv.ues.fia;
 
 
 import sv.ues.fia.institucion.Institucion;
+import sv.ues.fia.alumno.Alumno;
 import sv.ues.fia.bitacora.Bitacora;
 import sv.ues.fia.carrera.Carrera;
 import sv.ues.fia.especialidad.Especialidad;
@@ -30,6 +31,12 @@ public class ControladorBDG18
 			{"NTG","NPERFIL","PORCENAVANCE"};
 	private static final String[]camposTipoEspecialidad = new String []
 			{"IDTIPOESPECIALIDAD","NOMBREESPECIALIDAD"};
+	private static final String[]camposCarrera = new String []
+			{"IDCARRERA","NOMBCARRERA"};
+	private static final String[]camposPerfil = new String []
+			{"NPERFIL,ESTADO,OBSERVACIONES"};
+	private static final String[]camposFacultad = new String []
+			{"IDFACULTAD,NOMBCARRERA"};
 	private static final String[] camposBitacora = new String []
 			{"IDBITACORA","NTG","QUIEN","LUGAR","ETAPADESARROLLADA","HORAINICIO","HORAFIN"};
     private static final String[]camposEvaluacionEtapa=new String[]
@@ -51,6 +58,7 @@ public class ControladorBDG18
 		{
 			super(context, BASE_DATOS, null, VERSION);
 		}
+		
 		
 		@Override
 		public void onCreate(SQLiteDatabase db) 
@@ -102,18 +110,11 @@ public class ControladorBDG18
 						   "NOTA                 NUMERIC            NOT NULL,"+
 						   "PRIMARY KEY (NETAPA,CARNET) );"
 						   );
-
-				//Registro de carrera	
-				db.execSQL("create table CARRERA"+ 
-						"("+
-						   "IDCARRERA  		       VARCHAR2(15)              not null PRIMARY KEY,"+
-						   "NOMBCARRERA            VARCHAR2(50)         not null"+
-						");");
-				
+								
 				//Registro de perfil
 				db.execSQL("create table PERFIL"+ 
 						"("+
-						   "NPERFERFIL  		 INTEGER           not null PRIMARY KEY,"+
+						   "NPERFIL  		    INTEGER           not null PRIMARY KEY,"+
 						   "ESTADO            	VARCHAR2(10)         not null,"+
 						   "OBSERVACIONES		VARCHAR2(50)		 not null"+
 						");");
@@ -121,14 +122,14 @@ public class ControladorBDG18
 				//Registro de facultad
 				db.execSQL("create table FACULTAD"+ 
 						"("+
-						   "IDFACULTAD  		    VARCHAR2(50)          not null PRIMARY KEY,"+
+						   "IDFACULTAD  		    VARCHAR2(50)         not null PRIMARY KEY,"+
 						   "NOMBFACULTAD            VARCHAR2(50)         not null"+
 						");");
 
 				//Registro de carrera	
 				db.execSQL("create table CARRERA"+ 
 						"("+
-						   "IDCARRERA  		       VARCHAR2(15)              not null PRIMARY KEY,"+
+						   "IDCARRERA  		       VARCHAR2(15)         not null PRIMARY KEY,"+
 						   "NOMBCARRERA            VARCHAR2(50)         not null"+
 						");");
 			}
@@ -200,7 +201,7 @@ public class ControladorBDG18
 		ContentValues facu = new ContentValues();
 		facu.put("IDFACULTAD", facultad.getIDfacultad());
 		facu.put("NOMBFACULTAD", facultad.getNombFacultad());
-		contador=db.insert("PERFIL", null, facu);
+		contador=db.insert("FACULTAD", null, facu);
 		if(contador==-1 || contador==0)
 		{
 			regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
@@ -327,6 +328,48 @@ public class ControladorBDG18
 		return regInsertados;
 	}
 	//fin
+	
+	public Carrera consultarCarrera(String idcarrera){
+		String[] id = {idcarrera};
+		Cursor cursor = db.query("CARRERA",camposCarrera,"IDCARRERA = ?",	id,null,null,null);
+		if(cursor.moveToFirst()){
+			Carrera tcarrera = new Carrera();
+			tcarrera.setIdcarrera(cursor.getString(0));
+			tcarrera.setNombcarrera(cursor.getString(1));
+			return tcarrera;
+		}else{
+			return null;
+		}
+	}
+	
+	public Facultad consultarFacultad(String idfacultad){
+		String[] id = {idfacultad};
+		Cursor cursor = db.query("FACULTAD",camposFacultad,"IDCARRERA = ?",	id,null,null,null);
+		if(cursor.moveToFirst()){
+			Facultad tfacultad = new Facultad();
+			tfacultad.setIDfacultad(cursor.getString(0));
+			tfacultad.setNombFacultad(cursor.getString(1));
+			return tfacultad;
+		}else{
+			return null;
+		}
+	}
+	
+	public Perfil consultarPerfil(String idperfil){
+		String[] id = {idperfil};
+		Cursor cursor = db.query("PERFIL",camposPerfil,"NPERFIL = ?",	id,null,null,null);
+		if(cursor.moveToFirst()){
+			Perfil tperfil = new Perfil();
+			tperfil.setNperfil((cursor.getInt(0)));
+			tperfil.setEstado(cursor.getString(1));
+			tperfil.setObservaciones(cursor.getString(2));
+			return tperfil;
+		}else{
+			return null;
+		}
+	}
+	
+	
 	public Institucion consultarInstitucion(String codigoinst)
 	{
 		String[] id = {codigoinst};
@@ -572,6 +615,48 @@ public class ControladorBDG18
 		return regAfectados;
 	}
 	
+	public String actualizar(Carrera carrera){
+		if(verificarIntegridad(carrera, 5)){
+			String[] id = {carrera.getIdcarrera()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("IDCARRERA",carrera.getIdcarrera());
+			cv.put("NOMBCARRERA", carrera.getNombcarrera());
+			db.update("CARRERA", cv, "IDCARRERA = ?", id);
+			return "Registro Actualizado Correctamente";
+		}else{
+			return "Registro con CODIGO de carrera " + carrera.getIdcarrera()+ " no existe";
+		}
+	}
+	
+	public String actualizar(Facultad facultad){
+		if(verificarIntegridad(facultad, 5)){
+			String[] id = {facultad.getIDfacultad()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("IDFACULTAD",facultad.getIDfacultad());
+			cv.put("NOMBFACULTAD", facultad.getNombFacultad());
+			db.update("FACULTAD", cv, "IDFACULTAD = ?", id);
+			return "Registro Actualizado Correctamente";
+		}else{
+			return "Registro con CODIGO de especialidad " + facultad.getIDfacultad()+ " no existe";
+		}
+	}
+	
+	
+	public String actualizar(Perfil perfil){
+		if(verificarIntegridad(perfil, 5)){
+			String[] id = {perfil.getNperfil()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("NPERFIl",perfil.getNperfil());
+			cv.put("ESTADO",perfil.getEstado());
+			cv.put("OBSERVACIONES", perfil.getObservaciones());
+			db.update("PERFIL", cv, "NPERFIL = ?", id);
+			return "Registro Actualizado Correctamente";
+		}else{
+			return "Registro con CODIGO de especialidad " + perfil.getNperfil()	+ " no existe";
+		}
+	}
+	
+	
 	public String actualizar(Institucion institucion)
 	{
 		if(verificarIntegridad(institucion, 2))
@@ -734,5 +819,10 @@ public class ControladorBDG18
 			return false;
 		}
 	}
+	public Alumno consultarAlumno(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 }

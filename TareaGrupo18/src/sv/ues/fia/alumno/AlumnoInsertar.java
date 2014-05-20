@@ -27,6 +27,8 @@ public class AlumnoInsertar extends Activity {
 		editNombre = (EditText) findViewById(R.id.editNombre);
 		editApellido = (EditText) findViewById(R.id.editApellido);
 		editSexo = (EditText) findViewById(R.id.editSexo);
+		//editNgrupo = (EditText) findViewById(R.id.editNgrupo);
+		//editIdCarrera = (EditText) findViewById(R.id.editIdCarrera);
 	}
 
 
@@ -36,13 +38,17 @@ public class AlumnoInsertar extends Activity {
 		String nombre=editNombre.getText().toString();
 		String apellido=editApellido.getText().toString();
 		String sexo=editSexo.getText().toString();
-		String regInsertados;
-		Alumno alumno=new Alumno();
-		alumno.setCarnet(carnet);
-		alumno.setNombre(nombre);
-		alumno.setApellido(apellido);
-		alumno.setSexo(sexo);
-		alumno.setMatganadas(0);
+		int idcarrera=0;
+		int ngrupo=0;
+	    //String regInsertados;
+		Alumno alumn = new Alumno();
+		alumn.setCarnet(carnet);
+		alumn.setNombre(nombre);
+		alumn.setApellido(apellido);
+		alumn.setSexo(sexo);
+		alumn.setNgrupo(ngrupo);
+		alumn.setIdcarrera(idcarrera);
+		
 		helper.abrir();
 	//	regInsertados=helper.insertar(alumno);
 		helper.cerrar();
@@ -54,6 +60,8 @@ public class AlumnoInsertar extends Activity {
 		editNombre.setText("");
 		editApellido.setText("");
 		editSexo.setText("");
+		//editNgrupo.setText("");
+		//editIdCarrera.setText("");
 	}
 
 }
