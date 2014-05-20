@@ -113,5 +113,7 @@
     <string name="Grupo">Numero de Grupo</string>
     <string name="iddocente">Id Docente</string>
     <string name="title_activity_perfil_eliminar">PerfilEliminar</string>
+    <string name="tiporeunion">Tipo de reunion</string>
+    <string name="fecha">Fecha de realizacion</string>
 
 </resources>
