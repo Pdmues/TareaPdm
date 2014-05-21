@@ -578,6 +578,19 @@ public class ControladorBDG18
 		}
 		return regAfectados;
 	}
+	public String eliminar(RegistroBitacora rbit){
+		String regAfectados="filas afectadas= ";
+		int contador=0;
+		if(verificarIntegridad(rbit,8)){
+			String where="IDBITACORA='"+rbit.getIdbitacora()+"'";
+			where=where+" AND CARNET='"+rbit.getCarnet()+"'";
+			contador+=db.delete("REGISTROBITACORA", where, null);
+			regAfectados+=contador;
+		}else{
+			regAfectados="0";
+		}
+		return regAfectados;
+	}
 
 	public String eliminar(Carrera carrera)
 	{
@@ -767,6 +780,20 @@ public class ControladorBDG18
 			return "Registro con codigo "+bitacora.getIdbitacora()+" no existe";
 		}
 	}
+	public String actualizar(RegistroBitacora rbit){
+		if(verificarIntegridad(rbit,8)){
+			String[] id ={String.valueOf(rbit.getIdbitacora()),rbit.getCarnet()};
+			ContentValues cv = new ContentValues();
+			cv.put("IDBITACORA",rbit.getIdbitacora());
+			cv.put("CARNET",rbit.getCarnet());
+			cv.put("TIPOREUNION", rbit.getTipoReunion());
+			cv.put("FECHA", rbit.getFecha());
+			db.update("REGISTROBITACORA", cv, "IDBITACORA = ? AND CARNET = ?", id);
+			return "Registro actualizado";
+		}else{
+			return "Registro no existe";
+		}
+	}
 	
 
 	public String actualizar(TrabajoGraduacion tgraduacion)
@@ -892,6 +919,21 @@ public class ControladorBDG18
 				Cursor cursor2=db.query("ALUMNO",null,"CARNET = ?",id1,null,
 						null,null);
 				if(cursor1.moveToFirst() && cursor2.moveToFirst()){
+					//Se encontraron datos
+					return true;
+				}else{
+					return false;
+				}
+			}
+			case 8:
+			{
+				//verificar que exista carnet y idbitacora
+				RegistroBitacora rbitacora=(RegistroBitacora)dato;
+				String[] ids={String.valueOf(rbitacora.getIdbitacora()),rbitacora.getCarnet()};
+				abrir();
+				Cursor c= db.query("REGISTROBITACORA", null, "IDBITACORA = ? AND CARNET = ?",
+						ids, null, null, null);
+				if(c.moveToFirst()){
 					//Se encontraron datos
 					return true;
 				}else{
