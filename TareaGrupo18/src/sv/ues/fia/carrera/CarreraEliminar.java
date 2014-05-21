@@ -25,7 +25,7 @@ public class CarreraEliminar extends Activity {
 	{
 		String regEliminadas;
 		Carrera carrera = new Carrera();
-		carrera.setIdcarrera(editECcarr.getText().toString());
+		carrera.setIdcarrera(Integer.parseInt(editECcarr.getText().toString()));
 		controlhelper.abrir();
 		regEliminadas=controlhelper.eliminar(carrera);
 		controlhelper.cerrar();

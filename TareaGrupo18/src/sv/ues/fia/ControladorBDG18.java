@@ -1,15 +1,15 @@
 package sv.ues.fia;
 
 
-import sv.ues.fia.alumno.Alumno;
+import sv.ues.fia.institucion.Institucion;
 import sv.ues.fia.bitacora.Bitacora;
 import sv.ues.fia.carrera.Carrera;
 import sv.ues.fia.especialidad.Especialidad;
+import sv.ues.fia.etapa.Etapa;
 import sv.ues.fia.evaluacionetapa.EvaluacionEtapa;
 import sv.ues.fia.facultad.Facultad;
-import sv.ues.fia.institucion.Institucion;
+import sv.ues.fia.grupo.Grupo;
 import sv.ues.fia.perfil.Perfil;
-import sv.ues.fia.registrobitacora.RegistroBitacora;
 import sv.ues.fia.tipoespecialidad.TipoEspecialidad;
 import sv.ues.fia.trabajograduacion.TrabajoGraduacion;
 import android.content.ContentValues;
@@ -32,18 +32,12 @@ public class ControladorBDG18
 			{"NTG","NPERFIL","PORCENAVANCE"};
 	private static final String[]camposTipoEspecialidad = new String []
 			{"IDTIPOESPECIALIDAD","NOMBREESPECIALIDAD"};
-	private static final String[]camposCarrera = new String []
-			{"IDCARRERA","NOMBCARRERA"};
-	private static final String[]camposPerfil = new String []
-			{"NPERFIL,ESTADO,OBSERVACIONES"};
-	private static final String[]camposFacultad = new String []
-			{"IDFACULTAD,NOMBCARRERA"};
-	private static final String[] camposBitacora = new String []
-			{"IDBITACORA","NTG","QUIEN","LUGAR","ETAPADESARROLLADA","HORAINICIO","HORAFIN"};
-	private static final String[] camposRBitacora =new String []
-			{"IDBITACORA","CARNET","TIPOREUNION","FECHA"};
     private static final String[]camposEvaluacionEtapa=new String[]
     		{"NETAPA","CARNET","NOTA"};
+    private static final String[]camposgrupo=new String[]
+    		{"NGRUPO","IDDOCENTE"};	
+    private static final String[]camposetapa=new String[]
+    		{"NETAPA","NTG","FECHA"};
 	public ControladorBDG18(Context ctx) 
 	{
 		this.context = ctx;
@@ -61,7 +55,6 @@ public class ControladorBDG18
 		{
 			super(context, BASE_DATOS, null, VERSION);
 		}
-		
 		
 		@Override
 		public void onCreate(SQLiteDatabase db) 
@@ -102,24 +95,29 @@ public class ControladorBDG18
 				//Registro de bitacora
 				db.execSQL("create table REGISTROBITACORA"+
 						"("+
-						   "IDBITACORA      	INTEGER             not null,"+
-						   "CARNET				VARCHAR(20)			NOT NULL,"+
-						   "TIPOREUNION			VARCHAR(20)			NOT NULL,"+
-						   "FECHA				VARCHAR(20)			NOT NULL"+
+						   "IDBITACORA      	INTEGER             not null PRIMARY KEY,"+
+						   "CARNET				VARCHAR(20)			NOT NULL"+
 						");");
 				//Registro Evaluacion Etapa 
 				db.execSQL("create table EVALUACIONETAPA"+
 				        "("+
-						   "NETAPA               INTEGER            NOT NULL,"+
-						   "CARNET               VARCHAR(7)         NOT NULL,"+
-						   "NOTA                 NUMERIC            NOT NULL,"+
+						   "NETAPA               INTEGER             NOT NULL,"+
+						   "CARNET               VARCHAR2(7)         NOT NULL,"+
+						   "NOTA                 NUMERIC             NOT NULL,"+
 						   "PRIMARY KEY (NETAPA,CARNET) );"
 						   );
-								
+
+				//Registro de carrera	
+				db.execSQL("create table CARRERA"+ 
+						"("+
+						   "IDCARRERA  		       VARCHAR2(15)              not null PRIMARY KEY,"+
+						   "NOMBCARRERA            VARCHAR2(50)         not null"+
+						");");
+				
 				//Registro de perfil
 				db.execSQL("create table PERFIL"+ 
 						"("+
-						   "NPERFIL  		    INTEGER           not null PRIMARY KEY,"+
+						   "NPERFERFIL  		 INTEGER           not null PRIMARY KEY,"+
 						   "ESTADO            	VARCHAR2(10)         not null,"+
 						   "OBSERVACIONES		VARCHAR2(50)		 not null"+
 						");");
@@ -127,16 +125,23 @@ public class ControladorBDG18
 				//Registro de facultad
 				db.execSQL("create table FACULTAD"+ 
 						"("+
-						   "IDFACULTAD  		    VARCHAR2(50)         not null PRIMARY KEY,"+
+						   "IDFACULTAD  		    VARCHAR2(50)          not null PRIMARY KEY,"+
 						   "NOMBFACULTAD            VARCHAR2(50)         not null"+
 						");");
 
-				//Registro de carrera	
-				db.execSQL("create table CARRERA"+ 
+				db.execSQL("CREATE TABLE GRUPO"+
 						"("+
-						   "IDCARRERA  		       VARCHAR2(15)         not null PRIMARY KEY,"+
-						   "NOMBCARRERA            VARCHAR2(50)         not null"+
-						");");
+						"NGRUPO                    INTEGER                    NOT NULL PRIMARY KEY,"+
+						"IDDOCENTE                 VARCHAR2(7)                 NOT NULL"+
+						");"
+						);
+				db.execSQL("CREATE TABLE ETAPA"+
+						"("+
+                        "NETAPA                     INTEGER                     NOT NULL PRIMARY KEY,"+
+                        "NTG                        VARCHAR2(7)                 NOT NULL,"+
+                        "FECHA                      VARCHAR2(10)                NOT NULL"+
+                         ");"
+                        );
 			}
 			catch(SQLException e)
 			{
@@ -206,7 +211,7 @@ public class ControladorBDG18
 		ContentValues facu = new ContentValues();
 		facu.put("IDFACULTAD", facultad.getIDfacultad());
 		facu.put("NOMBFACULTAD", facultad.getNombFacultad());
-		contador=db.insert("FACULTAD", null, facu);
+		contador=db.insert("PERFIL", null, facu);
 		if(contador==-1 || contador==0)
 		{
 			regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
@@ -291,24 +296,6 @@ public class ControladorBDG18
 		}
 		return regInsertados;
 	}
-	public String insertar(RegistroBitacora rbitacora){
-		String regInsertados="RegistroInsertado N°= ";
-		long contador=0;
-		//if(verificarIntegridad(rbitacora,7)){
-			ContentValues cvtb=new ContentValues();
-			cvtb.put("IDBITACORA",rbitacora.getIdbitacora());
-			cvtb.put("CARNET",rbitacora.getCarnet());
-			cvtb.put("TIPOREUNION",rbitacora.getTipoReunion());
-			cvtb.put("FECHA", rbitacora.getFecha());
-			contador=db.insert("REGISTROBITACORA",null,cvtb);
-		//}
-		if(contador==-1 || contador==0){
-			regInsertados="Error al insertar el registro. Verificar insercion";
-		}else{
-			regInsertados=regInsertados+contador;
-		}
-		return regInsertados;
-	}
 	
 
 	public String insertar(TrabajoGraduacion tgraduacion)
@@ -350,49 +337,47 @@ public class ControladorBDG18
 		}
 		return regInsertados;
 	}
+	//insercion de grupos
+	public String insertar(Grupo grupo)
+	{
+		String regInsertados="Registro Insertado Nº= ";
+		long contador=0;
+		ContentValues grupos=new ContentValues();
+		grupos.put("NGRUPO", grupo.getNgrupo());
+		grupos.put("IDDOCENTE", grupo.getIddocente());
+		contador=db.insert("GRUPO", null, grupos);
+		if(contador==-1||contador==0)
+		{
+			regInsertados="Error al Insertar el registro, Registro Duplicado. Verificar inserción";	
+			}
+			else
+			{
+				regInsertados=regInsertados+contador;
+			}
+			return regInsertados;
+	}
 	//fin
-	
-	public Carrera consultarCarrera(String idcarrera){
-		String[] id = {idcarrera};
-		Cursor cursor = db.query("CARRERA",camposCarrera,"IDCARRERA = ?",	id,null,null,null);
-		if(cursor.moveToFirst()){
-			Carrera tcarrera = new Carrera();
-			tcarrera.setIdcarrera(cursor.getString(0));
-			tcarrera.setNombcarrera(cursor.getString(1));
-			return tcarrera;
-		}else{
-			return null;
-		}
+	//Insertar etapa
+	 public String insertar(Etapa etapa)
+	 {
+		 String regInsertados="Registro Insertado Nº= ";
+			long contador=0;
+			ContentValues etapas=new ContentValues(); 
+			etapas.put("NETAPA", etapa.getNumeroetapa());
+			etapas.put("NTG",etapa.getNTG() );
+			etapas.put("FECHA",etapa.getFecha());
+			contador=db.insert("ETAPA", null,etapas);
+			if(contador==-1||contador==0)
+			{
+			regInsertados="Error al Insertar el registro, Registro Duplicado. Verificar inserción";	
+			}
+			else
+			{
+				regInsertados=regInsertados+contador;
+			}
+			return regInsertados;
 	}
-	
-	public Facultad consultarFacultad(String idfacultad){
-		String[] id = {idfacultad};
-		Cursor cursor = db.query("FACULTAD",camposFacultad,"IDCARRERA = ?",	id,null,null,null);
-		if(cursor.moveToFirst()){
-			Facultad tfacultad = new Facultad();
-			tfacultad.setIDfacultad(cursor.getString(0));
-			tfacultad.setNombFacultad(cursor.getString(1));
-			return tfacultad;
-		}else{
-			return null;
-		}
-	}
-	
-	public Perfil consultarPerfil(String idperfil){
-		String[] id = {idperfil};
-		Cursor cursor = db.query("PERFIL",camposPerfil,"NPERFIL = ?",	id,null,null,null);
-		if(cursor.moveToFirst()){
-			Perfil tperfil = new Perfil();
-			tperfil.setNperfil((cursor.getInt(0)));
-			tperfil.setEstado(cursor.getString(1));
-			tperfil.setObservaciones(cursor.getString(2));
-			return tperfil;
-		}else{
-			return null;
-		}
-	}
-	
-	
+	//fin
 	public Institucion consultarInstitucion(String codigoinst)
 	{
 		String[] id = {codigoinst};
@@ -410,7 +395,37 @@ public class ControladorBDG18
 			return null;
 		}
 	}
-
+	//Consultar Grupo
+public Grupo consultarGrupo(String numerogrupo)
+{
+	String[]id={numerogrupo};
+	Cursor cursor=db.query("GRUPO", camposgrupo, "NGRUPO = ?", id, null, null,null);
+	if(cursor.moveToFirst())
+	{
+		Grupo grupo=new Grupo();
+		grupo.setNgrupo(cursor.getInt(0));
+		grupo.setIddocente(cursor.getString(1));
+		return grupo;
+	}
+	else
+		return null;
+}
+//consultar etapa 
+public Etapa consultaretapa(String numeroetapa)
+{
+	String []id={numeroetapa};
+	Cursor cursor=db.query("ETAPA", camposetapa, "NETAPA =?", id, null, null, null);
+	if(cursor.moveToFirst())
+	{
+		Etapa etapa=new Etapa();
+		etapa.setNumeroetapa(cursor.getInt(0));
+		etapa.setNTG(cursor.getString(1));
+		etapa.setFecha(cursor.getString(2));
+		return etapa;
+	}
+	else
+		return null;
+}
 	public Especialidad consultarEspecialidad(String codigoesp)
 	{
 		String[] id = {codigoesp};
@@ -441,38 +456,6 @@ public class ControladorBDG18
 			return null;
 		}
 	}
-	public Bitacora consultarBitacora(String IdBitacora){
-		String[] id={IdBitacora};
-		Cursor cursor=db.query("BITACORA",camposBitacora,"IDBITACORA = ?",
-				id,null,null,null);
-		if(cursor.moveToFirst()){
-			Bitacora b=new Bitacora();
-			b.setIdbitacora(cursor.getInt(0));
-			b.setNtg(cursor.getString(1));
-			b.setQuien(cursor.getString(2));
-			b.setLugar(cursor.getString(3));
-			b.setEtapadesarrollada(cursor.getInt(4));
-			b.setHorainicio(cursor.getString(5));
-			b.setHorafin(cursor.getString(6));
-			return b;
-		}else{
-			return null;
-		}
-	}
-	public RegistroBitacora consultarRegistroBitacora(String IdBitacora,String carnet){
-		String[] id = {IdBitacora,carnet};
-		Cursor cursor = db.query("REGISTROBITACORA", camposRBitacora, "IDBITACORA = ? AND CARNET = ?", id, null, null, null);
-		if(cursor.moveToFirst()){
-			RegistroBitacora rBit= new RegistroBitacora();
-			rBit.setIdbitacora(cursor.getInt(0));
-			rBit.setCarnet(cursor.getString(1));
-			rBit.setTipoReunion(cursor.getString(2));
-			rBit.setFecha(cursor.getString(3));
-			return rBit;
-		}else{
-			return null;
-		}
-	}
 	
 
 	public TrabajoGraduacion consultarTrabajoGraduacion(String codigotg)
@@ -494,11 +477,11 @@ public class ControladorBDG18
 		}
 	}
 	//consultar EvaluacionEtapa
-	public EvaluacionEtapa consultarEvaluacionEtapaString(String codigo_netapa,String codigo_carnet)
+	public EvaluacionEtapa consultarEvaluacionEtapa(String codigo_netapa,String codigo_carnet)
 	{
 
-	String []id={codigo_netapa+","+codigo_carnet};
-	Cursor cursor=db.query("EVALUACIONETAPA", camposEvaluacionEtapa, "NETAPA =?"+","+"CARNET=?", id, null, null, null);
+	String []id={codigo_netapa,codigo_carnet};
+	Cursor cursor=db.query("EVALUACIONETAPA", camposEvaluacionEtapa, "NETAPA = ? AND CARNET = ?", id, null, null, null);
 	if(cursor.moveToFirst())
 	{
 		EvaluacionEtapa evaetapa=new EvaluacionEtapa();
@@ -530,6 +513,39 @@ public class ControladorBDG18
 			regAfectados+=contador;
 		}
 		return regAfectados;
+	}
+	//eliminar grupo
+	public String eliminar(Grupo grupo)
+	{
+		String regAfectados="filas afectadas= ";
+		int contador=0;
+		if(!(verificarIntegridad(grupo, 7)))
+		{
+			regAfectados="0";
+		}
+		else
+		{
+			//borra registros de grupo
+			contador+=db.delete("GRUPO","NGRUPO='"+grupo.getNgrupo()+"'",null);
+			regAfectados+=contador;
+		}
+		return regAfectados;
+	}
+	public String eliminar(Etapa etapa)
+	{
+	String regAfectados="filas afectadas = ";
+	int contador=0;
+	if(!(verificarIntegridad(etapa, 8)))
+	{
+		regAfectados="0";
+	}
+	else
+	{
+		//borra registros de etapa
+		contador+=db.delete("ETAPA", "NETAPA='"+etapa.getNumeroetapa()+"'", null);
+		regAfectados+=contador;
+	}
+	return regAfectados;
 	}
 
 	public String eliminar(Especialidad especialidad)
@@ -566,31 +582,7 @@ public class ControladorBDG18
 		}
 		return regAfectados;
 	}
-	public String eliminar(Bitacora bitacora){
-		String regAfectados="filas afectadas= ";
-		int contador=0;
-		if(verificarIntegridad(bitacora,6)){
-			//borrar si existe
-			contador+=db.delete("BITACORA", "IDBITACORA='"+bitacora.getIdbitacora()+"'", null);
-			regAfectados+=contador;
-		}else{
-			regAfectados="0";
-		}
-		return regAfectados;
-	}
-	public String eliminar(RegistroBitacora rbit){
-		String regAfectados="filas afectadas= ";
-		int contador=0;
-		if(verificarIntegridad(rbit,8)){
-			String where="IDBITACORA='"+rbit.getIdbitacora()+"'";
-			where=where+" AND CARNET='"+rbit.getCarnet()+"'";
-			contador+=db.delete("REGISTROBITACORA", where, null);
-			regAfectados+=contador;
-		}else{
-			regAfectados="0";
-		}
-		return regAfectados;
-	}
+	
 
 	public String eliminar(Carrera carrera)
 	{
@@ -676,47 +668,22 @@ public class ControladorBDG18
 		return regAfectados;
 	}
 	
-	public String actualizar(Carrera carrera){
-		if(verificarIntegridad(carrera, 5)){
-			String[] id = {carrera.getIdcarrera()+""};
-			ContentValues cv = new ContentValues();
-			cv.put("IDCARRERA",carrera.getIdcarrera());
-			cv.put("NOMBCARRERA", carrera.getNombcarrera());
-			db.update("CARRERA", cv, "IDCARRERA = ?", id);
-			return "Registro Actualizado Correctamente";
-		}else{
-			return "Registro con CODIGO de carrera " + carrera.getIdcarrera()+ " no existe";
+	public String eliminar(EvaluacionEtapa evaluacion)
+	{
+	String regAfectados="filas afectadas= ";
+	int contador=0;
+		if(!(verificarIntegridad(evaluacion, 9)))
+		{
+		regAfectados="0";	
 		}
-	}
-	
-	public String actualizar(Facultad facultad){
-		if(verificarIntegridad(facultad, 5)){
-			String[] id = {facultad.getIDfacultad()+""};
-			ContentValues cv = new ContentValues();
-			cv.put("IDFACULTAD",facultad.getIDfacultad());
-			cv.put("NOMBFACULTAD", facultad.getNombFacultad());
-			db.update("FACULTAD", cv, "IDFACULTAD = ?", id);
-			return "Registro Actualizado Correctamente";
-		}else{
-			return "Registro con CODIGO de especialidad " + facultad.getIDfacultad()+ " no existe";
+		else{
+	    regAfectados="filas afectadas= ";
+		contador+=db.delete("EVALUACIONETAPA","NETAPA='"+evaluacion.getNetapa()+"'"+" AND "+" CARNET = '"+evaluacion.getCarnet()+"'",null);
+		regAfectados+=contador;
+		return regAfectados;
 		}
+		return regAfectados;
 	}
-	
-	
-	public String actualizar(Perfil perfil){
-		if(verificarIntegridad(perfil, 5)){
-			String[] id = {perfil.getNperfil()+""};
-			ContentValues cv = new ContentValues();
-			cv.put("NPERFIl",perfil.getNperfil());
-			cv.put("ESTADO",perfil.getEstado());
-			cv.put("OBSERVACIONES", perfil.getObservaciones());
-			db.update("PERFIL", cv, "NPERFIL = ?", id);
-			return "Registro Actualizado Correctamente";
-		}else{
-			return "Registro con CODIGO de especialidad " + perfil.getNperfil()	+ " no existe";
-		}
-	}
-	
 	
 	public String actualizar(Institucion institucion)
 	{
@@ -733,7 +700,53 @@ public class ControladorBDG18
 			return "Registro con el codigo " + institucion.getIdindtitucion() + " no existe";
 		}
 	}
-	
+	//Actualizar grupo
+	public String actualizar(Grupo grupo)
+	{
+		if(verificarIntegridad(grupo, 7))
+		{
+			String[] id={grupo.getNgrupo()+""};
+			ContentValues cv =new ContentValues();
+			cv.put("IDDOCENTE", grupo.getIddocente());
+			db.update("GRUPO", cv, "NGRUPO =?", id);
+			return "Registro Actualizado Correctamente";
+		}
+		else
+		{
+			return "Registro con el codigo " + grupo.getNgrupo() + " no existe";
+		}
+	}
+	//Actualizar etapa
+	public String actualizar(Etapa etapa)
+	{
+		if(verificarIntegridad(etapa, 8))
+		{
+		String[] id={etapa.getNumeroetapa()+""};
+		ContentValues cv=new ContentValues();
+		cv.put("NTG", etapa.getNTG());
+		cv.put("FECHA", etapa.getFecha());
+		db.update("ETAPA", cv, "NETAPA= ?", id);
+		return "Registro actualizado correctamente";
+		}
+		else
+			return "Registro con codigo="+etapa.getNumeroetapa()+"no existe";
+	}
+	//Actualizar Evaluacion Etapa
+	public String actualizar(EvaluacionEtapa eve)
+	{
+		if(verificarIntegridad(eve, 9))
+		{
+		String []id={eve.getNetapa()+"",eve.getCarnet()+""};
+		ContentValues cv=new ContentValues();
+		cv.put("NETAPA", eve.getNetapa());
+		cv.put("CARNET", eve.getCarnet());
+		cv.put("NOTA", eve.getNota());
+	    db.update("EVALUACIONETAPA", cv, "NETAPA =? AND CARNET =?", id);
+	    return "Registros actualizados correctamente";
+		}
+		else
+			return "Etapa con numero "+eve.getNetapa()+"con carnet "+eve.getCarnet()+" no existe"; 
+	}
 
 	public String actualizar(Especialidad especialidad)
 	{
@@ -761,37 +774,6 @@ public class ControladorBDG18
 		}else{
 			return "Registro con CODIGO de especialidad " + tespecialidad.getIDespecialidad()
 					+ " no existe";
-		}
-	}
-	public String actualizar(Bitacora bitacora){
-		if(verificarIntegridad(bitacora,6)){
-			String[] id = {bitacora.getIdbitacora()+""};
-			ContentValues cv = new ContentValues();
-			cv.put("IDBITACORA",bitacora.getIdbitacora());
-			cv.put("NTG",bitacora.getNtg());
-			cv.put("QUIEN",bitacora.getQuien());
-			cv.put("LUGAR",bitacora.getLugar());
-			cv.put("ETAPADESARROLLADA",bitacora.getEtapadesarrollada());
-			cv.put("HORAINICIO",bitacora.getHorainicio());
-			cv.put("HORAFIN",bitacora.getHorafin());
-			db.update("BITACORA", cv, "IDBITACORA = ?", id);
-			return "Registro actualizado correctamente";
-		}else{
-			return "Registro con codigo "+bitacora.getIdbitacora()+" no existe";
-		}
-	}
-	public String actualizar(RegistroBitacora rbit){
-		if(verificarIntegridad(rbit,8)){
-			String[] id ={String.valueOf(rbit.getIdbitacora()),rbit.getCarnet()};
-			ContentValues cv = new ContentValues();
-			cv.put("IDBITACORA",rbit.getIdbitacora());
-			cv.put("CARNET",rbit.getCarnet());
-			cv.put("TIPOREUNION", rbit.getTipoReunion());
-			cv.put("FECHA", rbit.getFecha());
-			db.update("REGISTROBITACORA", cv, "IDBITACORA = ? AND CARNET = ?", id);
-			return "Registro actualizado";
-		}else{
-			return "Registro no existe";
 		}
 	}
 	
@@ -909,45 +891,56 @@ public class ControladorBDG18
 			}
 			case 7:
 			{
-				//verificar que exista carnet y codigo de bitacora al insertar
-				//el RegistroBitacora.
-				RegistroBitacora rbitacora=(RegistroBitacora)dato;
-				String[] id1={rbitacora.getCarnet()};
-				String[] id2={String.valueOf(rbitacora.getIdbitacora())};
-				Cursor cursor1=db.query("BITACORA",null,"IDBITACORA = ?",id2,null,
-						null,null);
-				Cursor cursor2=db.query("ALUMNO",null,"CARNET = ?",id1,null,
-						null,null);
-				if(cursor1.moveToFirst() && cursor2.moveToFirst()){
-					//Se encontraron datos
+				//verfica que exista Ngrupo
+				Grupo grup=(Grupo)dato;
+				String[] id={grup.getNgrupo()+""};
+				abrir();
+				Cursor c5=db.query("GRUPO", null, "NGRUPO =?", id, null, null, null);
+				if(c5.moveToFirst())
+				{
+					//Existe
 					return true;
-				}else{
+				}
+				else{
 					return false;
 				}
 			}
 			case 8:
 			{
-				//verificar que exista carnet y idbitacora
-				RegistroBitacora rbitacora=(RegistroBitacora)dato;
-				String[] ids={String.valueOf(rbitacora.getIdbitacora()),rbitacora.getCarnet()};
+				//verfifica que exista NEtapa
+				Etapa e=(Etapa)dato;
+				String[]id={e.getNumeroetapa()+""};
 				abrir();
-				Cursor c= db.query("REGISTROBITACORA", null, "IDBITACORA = ? AND CARNET = ?",
-						ids, null, null, null);
-				if(c.moveToFirst()){
-					//Se encontraron datos
+				Cursor c6=db.query("ETAPA", null, "NETAPA =?", id, null, null, null);
+				if(c6.moveToFirst())
+				{
 					return true;
-				}else{
+				}
+				else
+				{
 					return false;
 				}
 			}
+				
+				case 9:
+				{//verfica que exista evaluacion etapa
+					EvaluacionEtapa evea=(EvaluacionEtapa)dato;
+					String []id={evea.getNetapa()+"",evea.getCarnet()+""};
+					abrir();
+					Cursor c7=db.query("EVALUACIONETAPA", null, "NETAPA=? AND CARNET=?",id, null,null,null);
+					if(c7.moveToFirst())
+					{
+						return true;
+  			    	}
+					else{
+						return false;
+					}
+					
+				}
+			
 			default:
 			return false;
 		}
 	}
-	public Alumno consultarAlumno(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 
 }

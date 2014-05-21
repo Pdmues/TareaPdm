@@ -34,7 +34,10 @@
 </TableRow>
 <TableRow >
 
-    <Button android:text="@string/eliminar" />
+    <Button 
+        
+        android:text="@string/eliminar"
+        android:onClick="eliminarEvaluacionEtapa"/>
 
 </TableRow>
 

@@ -36,11 +36,13 @@
      <TableRow >
          <Button 
              android:text="@string/insertar"
-             android:id="@+id/buttongrupoinsertar"/>
+             android:id="@+id/buttongrupoinsertar"
+             android:onClick="insertargrupo"/>
          
          <Button 
              android:text="@string/limpiar"
-             android:id="@+id/buttongrupoinsertarlimpiar" />
+             android:id="@+id/buttongrupoinsertarlimpiar"
+             android:onClick="limpiarTextogrupo" />
      </TableRow>
      
      </TableLayout>

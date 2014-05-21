@@ -1,25 +1,46 @@
 package sv.ues.fia.evaluacionetapa;
 
+import java.util.ResourceBundle.Control;
+
+import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
 import sv.ues.fia.R.layout;
 import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class EvaluacionEtapaConsultar extends Activity {
-
+  EditText consultarevaluacionetapanumero;
+  EditText consultarevaluacionetapacarnet;
+  EditText consultarevaluacionetapanota;
+  ControladorBDG18 controlhelper;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_evaluacion_etapa_consultar);
+		consultarevaluacionetapanumero=(EditText)findViewById(R.id.editNumeroEtapaEvaluacioEtapaConsultar);
+		consultarevaluacionetapacarnet=(EditText)findViewById(R.id.editCarnetEvaluacionEtapaConsultar);
+		consultarevaluacionetapanota=(EditText)findViewById(R.id.editNotaEvaluacionEtapaConsultar);
+		controlhelper=new ControladorBDG18 (this);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.evaluacion_etapa_consultar, menu);
-		return true;
+	public void consultarEvaluacionEtapa(View v)
+	{
+		controlhelper.abrir();
+		EvaluacionEtapa evaluacione=controlhelper.consultarEvaluacionEtapa(consultarevaluacionetapanumero.getText().toString(), consultarevaluacionetapacarnet.getText().toString());
+		controlhelper.cerrar();
+		if(evaluacione==null)
+		{
+			Toast.makeText(this, "La etapa con numero " +
+					consultarevaluacionetapanumero.getText().toString() +
+			"y carnet"+consultarevaluacionetapacarnet.getText().toString()+"no existe", Toast.LENGTH_LONG).show();
+		}
+		else{
+			consultarevaluacionetapanota.setText(""+evaluacione.getNota());
+		}
 	}
-
 }

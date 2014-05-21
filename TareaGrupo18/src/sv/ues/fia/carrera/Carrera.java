@@ -3,14 +3,14 @@ package sv.ues.fia.carrera;
 public class Carrera 
 {
 
-	private String idcarrera="";
+	private int idcarrera=0;
 	private String nombcarrera="";
 	
-	public String getIdcarrera() {
+	public int getIdcarrera() {
 		return idcarrera;
 	}
-	public void setIdcarrera(String ccarrera) {
-		this.idcarrera = ccarrera;
+	public void setIdcarrera(int idcarrera) {
+		this.idcarrera = idcarrera;
 	}
 
 	public String getNombcarrera() {

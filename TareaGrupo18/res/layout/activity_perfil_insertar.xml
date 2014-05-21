@@ -22,7 +22,7 @@
 
 		<EditText
 		    android:id="@+id/editEsPerfil"
-		    android:inputType="text"
+		    android:inputType="number"
 		    android:maxLength="15" />
 
 		</TableRow>
@@ -33,7 +33,7 @@
 
 		<EditText
 		    android:id="@+id/editObPerfil"
-		    android:inputType="text"
+		    android:inputType="number"
 		    android:maxLength="50" />
 
 	</TableRow>

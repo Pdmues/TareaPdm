@@ -42,17 +42,12 @@ public class EvaluacionEtapaInsertar extends Activity {
 		Toast.makeText(this, insertados, Toast.LENGTH_SHORT).show();
 		
 	}
-	public void limpiarEvaluacionEtapaInsertar(){
+	public void limpiarEvaluacionEtapaInsertar(View v){
 		numeroetapainsertar.setText("");
 		carnetinsertar.setText("");
 		notaetapainsertar.setText("");
 		
 	}
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.evaluacion_etapa_insertar, menu);
-		return true;
-	}
+
 
 }

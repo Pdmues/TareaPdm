@@ -1,25 +1,36 @@
 package sv.ues.fia.grupo;
 
+import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
-import sv.ues.fia.R.layout;
-import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class GrupoModificar extends Activity {
-
+	ControladorBDG18 helper;
+	EditText ngrupomodificar;
+	EditText iddocentemodificar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_grupo_modificar);
+		helper=new ControladorBDG18(this);
+		ngrupomodificar=(EditText)findViewById(R.id.editGrupoModificar);
+		iddocentemodificar=(EditText)findViewById(R.id.editIdDocenteModificar);
+		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.grupo_modificar, menu);
-		return true;
-	}
+public void actualizarGrupo(View v)
+{
+	Grupo g= new Grupo();
+	g.setNgrupo(Integer.parseInt(ngrupomodificar.getText().toString()));
+	g.setIddocente(iddocentemodificar.getText().toString());
+	helper.abrir();
+	String estado=helper.actualizar(g);
+	helper.cerrar();
+	Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+}
 
 }

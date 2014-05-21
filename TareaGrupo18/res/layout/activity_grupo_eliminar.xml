@@ -23,7 +23,8 @@
     <TableRow >
         <Button 
             android:text="@string/eliminar"
-            android:id="@+id/GrupoEliminar"/>
+            android:id="@+id/GrupoEliminar"
+            android:onClick="eliminargrupo"/>
         
     </TableRow>
 

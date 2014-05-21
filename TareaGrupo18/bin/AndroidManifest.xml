@@ -306,10 +306,6 @@
             android:name="sv.ues.fia.evaluacionetapa.EvaluacionEtapaModificar"
             android:label="@string/title_activity_evaluacion_etapa_modificar" >
         </activity>
-        <activity
-            android:name="sv.ues.fia.PerfilEliminar"
-            android:label="@string/title_activity_perfil_eliminar" >
-        </activity>
     </application>
 
 </manifest>

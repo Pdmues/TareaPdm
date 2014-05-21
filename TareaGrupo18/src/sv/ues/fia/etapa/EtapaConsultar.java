@@ -1,25 +1,48 @@
 package sv.ues.fia.etapa;
 
+import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
-import sv.ues.fia.R.layout;
-import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class EtapaConsultar extends Activity {
+	ControladorBDG18 helper;
+	EditText numeroetapamodificar;
+	EditText numerotgmodificar;
+	EditText fechamodificar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_etapa_consultar);
+		helper=new ControladorBDG18(this);
+		numeroetapamodificar=(EditText)findViewById(R.id.editnumeroetapaconsultaretapa);
+		numerotgmodificar=(EditText)findViewById(R.id.editntgraduacionconsultaretapa);
+		fechamodificar=(EditText)findViewById(R.id.editfechaconsultaretapa);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.etapa_consultar, menu);
-		return true;
+public void consultaretapa(View v)
+{
+	helper.abrir();
+	Etapa e=helper.consultaretapa(numeroetapamodificar.getText().toString());
+	helper.cerrar();
+	if(e==null)
+	{
+		Toast.makeText(this,"La etapa con numero"+numeroetapamodificar.getText().toString()+" no se ha encontrado", Toast.LENGTH_LONG).show();
 	}
+	else{
+	numerotgmodificar.setText(e.getNTG().toString());
+	fechamodificar.setText(e.getFecha().toString());
+	}
+}
+public void limpiarconsultaretapa(View v)
+{
+	numeroetapamodificar.setText("");
+	numerotgmodificar.setText("");
+	fechamodificar.setText("");
+}
 
 }

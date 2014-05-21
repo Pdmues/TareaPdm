@@ -7,9 +7,7 @@ public class Alumno
 	private String nombre;
 	private String apellido;
 	private String sexo;
-	private int ngrupo;
-	private int idcarrera;
-
+	private int matganadas;
 	
 	
 	public Alumno()
@@ -54,17 +52,12 @@ public class Alumno
 	{
 		this.sexo = sexo;
 	}
-	
-	public int getNgrupo() {
-		return ngrupo;
+	public int getMatganadas() 
+	{
+		return matganadas;
 	}
-	public void setNgrupo(int ngrupo) {
-		this.ngrupo = ngrupo;
-	}
-	public int getIdcarrera() {
-		return idcarrera;
-	}
-	public void setIdcarrera(int idcarrera) {
-		this.idcarrera = idcarrera;
+	public void setMatganadas(int matganadas) 
+	{
+		this.matganadas = matganadas;
 	}
 }

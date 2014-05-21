@@ -67,7 +67,7 @@
 
         <Button
              android:text="@string/limpiar"
-             android:onClick="limpiarEvaluacionEtapaInsertar"  />
+             android:onClick="limpiarEvaluacionEtapaInsertar"/>
 
     </TableRow>
   

@@ -1,75 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/cbitacora"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".RegistroBitacoraConsultar" >
 
-	<EditText
-	    android:id="@+id/editIdBitacora"
-	    android:layout_width="200dp"
-	    android:layout_height="wrap_content"
-	    android:inputType="number"
-	    android:maxLength="7" />
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/carnet"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
 
-	<EditText
-	    android:id="@+id/editcarnet"
-	    android:layout_width="200dp"
-	    android:layout_height="wrap_content"
-	    android:inputType="text"
-	    android:maxLength="7" />
-
-	<LinearLayout
-		android:id="@+id/linearLayout1"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" >
-		<Button
-			android:id="@+id/botonConsultar"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/consultar"
-			android:onClick="consultarRegistroBitacora"/>
-		<Button
-			android:id="@+id/botonLimpiar"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/limpiar"
-			android:onClick="limpiarTexto"/>
-	</LinearLayout>
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/tiporeunion" />
-	<EditText
-		android:id="@+id/edittiporeunion"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:inputType="text"
-		android:enabled ="false"
-		android:focusable="false"
-		android:focusableInTouchMode="false"
-		android:cursorVisible="false"
-		android:longClickable="false" />
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/fecha" />
-	<EditText
-		android:id="@+id/editfecha"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:inputType="text"
-		android:enabled ="false"
-		android:focusable="false"
-		android:focusableInTouchMode="false"
-		android:cursorVisible="false"
-		android:longClickable="false" />
-	
-</LinearLayout>
+</RelativeLayout>

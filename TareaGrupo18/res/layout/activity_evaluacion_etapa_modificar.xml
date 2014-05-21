@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Buscar"
             android:inputType="number" >
 
             <requestFocus />
@@ -30,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/carnet"
+            android:hint="Buscar"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -37,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Buscar"
             android:inputType="text" />
 
     </TableRow>
@@ -55,19 +58,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Modificar"
             android:inputType="numberDecimal" />
 
     </TableRow>
 
     <TableRow >
 
-        <Button android:text="@string/actualizar" />
+        <Button android:text="@string/actualizar"
+            	android:onClick="actualizarevaluacionetapa" />
 
     </TableRow>
 
     <TableRow >
 
-        <Button android:text="@string/limpiar" />
+        <Button android:text="@string/limpiar"
+            	android:onClick="limpiaractualizarevaluacionetapa" />
 
     </TableRow>
 

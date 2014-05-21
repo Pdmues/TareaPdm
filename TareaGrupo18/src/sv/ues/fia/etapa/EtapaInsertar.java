@@ -1,25 +1,49 @@
 package sv.ues.fia.etapa;
 
+import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
-import sv.ues.fia.R.layout;
-import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class EtapaInsertar extends Activity {
 
+	ControladorBDG18 helper;
+	EditText numeroetapainsertar;
+	EditText NTGinsertar;
+	EditText fechainsertar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_etapa_insertar);
+		helper= new ControladorBDG18(this);
+		numeroetapainsertar=(EditText)findViewById(R.id.editEtapaNumeroEtapaInsertar);
+		NTGinsertar=(EditText)findViewById(R.id.editEtapaNTGInsertar);
+		fechainsertar=(EditText)findViewById(R.id.editEtapaFechaInsertar);
+		
+		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.etapa_insertar, menu);
-		return true;
-	}
-
+public void insertaretapa(View v)
+{
+	String numero=numeroetapainsertar.getText().toString();
+	String NTG= NTGinsertar.getText().toString();
+	String fecha= fechainsertar.getText().toString();
+	Etapa et=new Etapa();
+	et.setNumeroetapa(Integer.parseInt(numero));
+	et.setNTG(NTG);
+	et.setFecha(fecha);
+	helper.abrir();
+	String regInsertados=helper.insertar(et);
+	helper.cerrar();
+	Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+}
+public void limpiaretapa(View v)
+{
+	numeroetapainsertar.setText("");
+	NTGinsertar.setText("");
+	fechainsertar.setText("");
+}
 }
