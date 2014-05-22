@@ -2,7 +2,6 @@ package sv.ues.fia.trabajograduacion;
 
 import sv.ues.fia.R;
 import sv.ues.fia.ControladorBDG18;
-import sv.ues.fia.institucion.Institucion;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;

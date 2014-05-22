@@ -152,103 +152,91 @@ public class ControladorBDG18
 			
 			/////TRIGGERS
 				//isertar en Etapa un NTG que exista
-				db.execSQL("CREATE TRIGGER FK_NTG_TRABAJOGRADUACION"+
+				db.execSQL("CREATE TRIGGER FK_NTG_TRABAJOGRADUACION "+
 
-                        "BEFORE INSERT ON ETAPA"+
-                        "FOR EACH ROW"+
+                        "BEFORE INSERT ON ETAPA "+
+                        "FOR EACH ROW "+
 
-                        "BEGIN"+
-                               "SELECT CASE"+
+                        "BEGIN "+
+                               "SELECT CASE "+
                                "WHEN((SELECT NTG FROM TRABAJOGRADUACION WHERE NTG= NEW.NTG)IS NULL)"+
                                "THEN RAISE(ABORT, 'No existe ese numero el numero de trabajo de graduacion')"+
-                               "END;"+
+                               " END;"+
                          "END;");
 				//insertar una evaluacion para una etapa que exista
-				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ETAPA"+
+				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ETAPA "+
 
-                           "BEFORE INSERT ON EVALUACIONETAPA"+
-                           "FOR EACH ROW"+
+                           "BEFORE INSERT ON EVALUACIONETAPA "+
+                           "FOR EACH ROW "+
 
-                           "BEGIN"+
-                                "SELECT CASE"+
+                           "BEGIN "+
+                                "SELECT CASE "+
                                 "WHEN((SELECT NETAPA FROM ETAPA WHERE NETAPA= NEW.NETAPA)IS NULL)"+
                                 "THEN RAISE(ABORT, 'No existe numero de etapa')"+
-                                "END;"+
+                                " END;"+
                             "END ;");
 				//insertar un grupo para un docente que exista
-				db.execSQL("CREATE TRIGGER FK_GRUPO_IDDOCENTE"+
+				db.execSQL("CREATE TRIGGER FK_GRUPO_IDDOCENTE "+
 
-                           "BEFORE INSERT ON GRUPO"+
-                           "FOR EACH ROW"+
+                           "BEFORE INSERT ON GRUPO "+
+                           "FOR EACH ROW "+
 
-                           "BEGIN"+
-                                "SELECT CASE"+
+                           "BEGIN "+
+                                "SELECT CASE "+
                                 "WHEN((SELECT IDDOCENTE FROM DOCENTE WHERE IDDOCENTE= NEW.IDDOCENTE)IS NULL)"+
                                 "THEN RAISE(ABORT, 'No existe ID de docente')"+
                                 "END;"+
                            "END ;");
 				
 				//Borrar un grupo del que exista alumno
-				db.execSQL("CREATE TRIGGER FK_GRUPO_ALUMNO"+
+				db.execSQL("CREATE TRIGGER FK_GRUPO_ALUMNO "+
 
-                           "BEFORE DELETE ON GRUPO"+
-                           "FOR EACH ROW"+
+                           "BEFORE DELETE ON GRUPO "+
+                           "FOR EACH ROW "+
                            
-                           "BEGIN"+
-                              "SELECT CASE"+
+                           "BEGIN "+
+                              "SELECT CASE "+
                               "WHEN((SELECT NGRUPO FROM ALUMNO WHERE OLD.NGRUPO=NGRUPO))"+
                               "THEN RAISE(ABORT,'No se puede eliminar grupo')"+
                               "END;"+
                            "END;");
 	
 				//Borrar evaluacion del que exista alumno
-				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ALUMNOELIMINAR"+
+				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ALUMNOELIMINAR "+
 
-                           "BEFORE DELETE ON EVALUACIONETAPA"+
-                           "FOR EACH ROW"+
+                           "BEFORE DELETE ON EVALUACIONETAPA "+
+                           "FOR EACH ROW "+
 
-                           "BEGIN"+
-                               "SELECT CASE"+
+                           "BEGIN "+
+                               "SELECT CASE "+
                                "WHEN((SELECT CARNET FROM ALUMNO WHERE OLD.CARNET=CARNET)IS NULL)"+
                                "THEN RAISE(ABORT, 'No se puede eliminar')"+
                                "END;"+
                             "END");
 				//Insertar una evaluacion del que exista alumno
-				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ALUMNO"+
+				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ALUMNO "+
 
-                           "BEFORE INSERT ON EVALUACIONETAPA"+
-                           "FOR EACH ROW"+
+                           "BEFORE INSERT ON EVALUACIONETAPA "+
+                           "FOR EACH ROW "+
 
-                           "BEGIN"+
-                                "SELECT CASE"+
+                           "BEGIN "+
+                                "SELECT CASE "+
                                 "WHEN((SELECT CARNET FROM ALUMNO WHERE CARNET= NEW.CARNET)IS NULL)"+
                                 "THEN RAISE(ABORT, 'No existe carnet')"+
                                 "END;"+
                             "END");
-				//insertar una evaluacion para la que exista una etapa
-				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ETAPA"+
-
-                           "BEFORE INSERT ON EVALUACIONETAPA"+
-                           "FOR EACH ROW"+
-
-                           "BEGIN"+
-                               "SELECT CASE"+
-                               "WHEN((SELECT NETAPA FROM ETAPA WHERE NETAPA= NEW.NETAPA)IS NULL)"+
-                               "THEN RAISE(ABORT, 'No existe numero de etapa')"+
-                               "END;"+
-                           "END");
 				//eliminar evaluacion que exista etapa
-				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ETAPAELIMINAR"+
+				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ETAPAELIMINAR "+
 
-                           "BEFORE DELETE ON EVALUACIONETAPA"+
-                           "FOR EACH ROW"+
+                           "BEFORE DELETE ON EVALUACIONETAPA "+
+                           "FOR EACH ROW "+
 
-                           "BEGIN"+
-                                 "SELECT CASE"+
+                           "BEGIN "+
+                                 "SELECT CASE "+
                                  "WHEN((SELECT NETAPA FROM ETAPA WHERE OLD.NETAPA=NETAPA)IS NULL)"+
                                  "THEN RAISE(ABORT, 'No se puede eliminar la evaluacion')"+
                                  "END;"+
-                           "END");
+                           " END");
 			}
 			catch(SQLException e)
 			{
