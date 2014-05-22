@@ -10,6 +10,7 @@ import sv.ues.fia.evaluacionetapa.EvaluacionEtapa;
 import sv.ues.fia.facultad.Facultad;
 import sv.ues.fia.grupo.Grupo;
 import sv.ues.fia.perfil.Perfil;
+import sv.ues.fia.registrobitacora.RegistroBitacora;
 import sv.ues.fia.tipoespecialidad.TipoEspecialidad;
 import sv.ues.fia.trabajograduacion.TrabajoGraduacion;
 import android.content.ContentValues;
@@ -34,6 +35,8 @@ public class ControladorBDG18
 			{"IDTIPOESPECIALIDAD","NOMBREESPECIALIDAD"};
 	private static final String[] camposBitacora = new String []
 			{"IDBITACORA","NTG","QUIEN","LUGAR","ETAPADESARROLLADA","HORAINICIO","HORAFIN"};
+	private static final String[] camposRBitacora =new String []
+			{"IDBITACORA","CARNET","TIPOREUNION","FECHA"};
     private static final String[]camposEvaluacionEtapa=new String[]
     		{"NETAPA","CARNET","NOTA"};
     private static final String[]camposgrupo=new String[]
@@ -97,8 +100,10 @@ public class ControladorBDG18
 				//Registro de bitacora
 				db.execSQL("create table REGISTROBITACORA"+
 						"("+
-						   "IDBITACORA      	INTEGER             not null PRIMARY KEY,"+
-						   "CARNET				VARCHAR(20)			NOT NULL"+
+						   "IDBITACORA      	INTEGER             not null,"+
+						   "CARNET				VARCHAR(20)			NOT NULL,"+
+						   "TIPOREUNION			VARCHAR(20)			NOT NULL,"+
+						   "FECHA				VARCHAR(20)			NOT NULL"+
 						");");
 				//Registro Evaluacion Etapa 
 				db.execSQL("create table EVALUACIONETAPA"+
@@ -298,6 +303,24 @@ public class ControladorBDG18
 		}
 		return regInsertados;
 	}
+	public String insertar(RegistroBitacora rbitacora){
+		String regInsertados="RegistroInsertado N°= ";
+		long contador=0;
+		//if(verificarIntegridad(rbitacora,10)){
+			ContentValues cvtb=new ContentValues();
+			cvtb.put("IDBITACORA",rbitacora.getIdbitacora());
+			cvtb.put("CARNET",rbitacora.getCarnet());
+			cvtb.put("TIPOREUNION",rbitacora.getTipoReunion());
+			cvtb.put("FECHA", rbitacora.getFecha());
+			contador=db.insert("REGISTROBITACORA",null,cvtb);
+		//}
+		if(contador==-1 || contador==0){
+			regInsertados="Error al insertar el registro. Verificar insercion";
+		}else{
+			regInsertados=regInsertados+contador;
+		}
+		return regInsertados;
+	}
 	
 
 	public String insertar(TrabajoGraduacion tgraduacion)
@@ -476,7 +499,20 @@ public Etapa consultaretapa(String numeroetapa)
 			return null;
 		}
 	}
-	
+	public RegistroBitacora consultarRegistroBitacora(String IdBitacora,String carnet){
+		String[] id = {IdBitacora,carnet};
+		Cursor cursor = db.query("REGISTROBITACORA", camposRBitacora, "IDBITACORA = ? AND CARNET = ?", id, null, null, null);
+		if(cursor.moveToFirst()){
+			RegistroBitacora rBit= new RegistroBitacora();
+			rBit.setIdbitacora(cursor.getInt(0));
+			rBit.setCarnet(cursor.getString(1));
+			rBit.setTipoReunion(cursor.getString(2));
+			rBit.setFecha(cursor.getString(3));
+			return rBit;
+		}else{
+			return null;
+		}
+	}
 
 	public TrabajoGraduacion consultarTrabajoGraduacion(String codigotg)
 	{
@@ -614,7 +650,19 @@ public Etapa consultaretapa(String numeroetapa)
 		}
 		return regAfectados;
 	}
-	
+	public String eliminar(RegistroBitacora rbit){
+		String regAfectados="filas afectadas= ";
+		int contador=0;
+		if(verificarIntegridad(rbit,11)){
+			String where="IDBITACORA='"+rbit.getIdbitacora()+"'";
+			where=where+" AND CARNET='"+rbit.getCarnet()+"'";
+			contador+=db.delete("REGISTROBITACORA", where, null);
+			regAfectados+=contador;
+		}else{
+			regAfectados="0";
+		}
+		return regAfectados;
+	}
 
 	public String eliminar(Carrera carrera)
 	{
@@ -825,8 +873,21 @@ public Etapa consultaretapa(String numeroetapa)
 			return "Registro con codigo "+bitacora.getIdbitacora()+" no existe";
 		}
 	}
+	public String actualizar(RegistroBitacora rbit){
+		if(verificarIntegridad(rbit,11)){
+			String[] id ={String.valueOf(rbit.getIdbitacora()),rbit.getCarnet()};
+			ContentValues cv = new ContentValues();
+			cv.put("IDBITACORA",rbit.getIdbitacora());
+			cv.put("CARNET",rbit.getCarnet());
+			cv.put("TIPOREUNION", rbit.getTipoReunion());
+			cv.put("FECHA", rbit.getFecha());
+			db.update("REGISTROBITACORA", cv, "IDBITACORA = ? AND CARNET = ?", id);
+			return "Registro actualizado";
+		}else{
+			return "Registro no existe";
+		}
+	}
 	
-
 	public String actualizar(TrabajoGraduacion tgraduacion)
 	{
 		if(verificarIntegridad(tgraduacion, 4))
@@ -985,6 +1046,39 @@ public Etapa consultaretapa(String numeroetapa)
 						return false;
 					}
 					
+				}
+				case 10:
+				{
+					//verificar que exista carnet y codigo de bitacora al insertar
+					//el RegistroBitacora.
+					RegistroBitacora rbitacora=(RegistroBitacora)dato;
+					String[] id1={rbitacora.getCarnet()};
+					String[] id2={String.valueOf(rbitacora.getIdbitacora())};
+					Cursor cursor1=db.query("BITACORA",null,"IDBITACORA = ?",id2,null,
+							null,null);
+					Cursor cursor2=db.query("ALUMNO",null,"CARNET = ?",id1,null,
+							null,null);
+					if(cursor1.moveToFirst() && cursor2.moveToFirst()){
+						//Se encontraron datos
+						return true;
+					}else{
+						return false;
+					}
+				}
+				case 11:
+				{
+					//verificar que exista carnet y idbitacora
+					RegistroBitacora rbitacora=(RegistroBitacora)dato;
+					String[] ids={String.valueOf(rbitacora.getIdbitacora()),rbitacora.getCarnet()};
+					abrir();
+					Cursor c= db.query("REGISTROBITACORA", null, "IDBITACORA = ? AND CARNET = ?",
+							ids, null, null, null);
+					if(c.moveToFirst()){
+						//Se encontraron datos
+						return true;
+					}else{
+						return false;
+					}
 				}
 			
 			default:
