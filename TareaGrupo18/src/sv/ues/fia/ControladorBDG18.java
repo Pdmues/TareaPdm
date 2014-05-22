@@ -32,6 +32,8 @@ public class ControladorBDG18
 			{"NTG","NPERFIL","PORCENAVANCE"};
 	private static final String[]camposTipoEspecialidad = new String []
 			{"IDTIPOESPECIALIDAD","NOMBREESPECIALIDAD"};
+	private static final String[] camposBitacora = new String []
+			{"IDBITACORA","NTG","QUIEN","LUGAR","ETAPADESARROLLADA","HORAINICIO","HORAFIN"};
     private static final String[]camposEvaluacionEtapa=new String[]
     		{"NETAPA","CARNET","NOTA"};
     private static final String[]camposgrupo=new String[]
@@ -456,6 +458,24 @@ public Etapa consultaretapa(String numeroetapa)
 			return null;
 		}
 	}
+	public Bitacora consultarBitacora(String IdBitacora){
+		String[] id={IdBitacora};
+		Cursor cursor=db.query("BITACORA",camposBitacora,"IDBITACORA = ?",
+				id,null,null,null);
+		if(cursor.moveToFirst()){
+			Bitacora b=new Bitacora();
+			b.setIdbitacora(cursor.getInt(0));
+			b.setNtg(cursor.getString(1));
+			b.setQuien(cursor.getString(2));
+			b.setLugar(cursor.getString(3));
+			b.setEtapadesarrollada(cursor.getInt(4));
+			b.setHorainicio(cursor.getString(5));
+			b.setHorafin(cursor.getString(6));
+			return b;
+		}else{
+			return null;
+		}
+	}
 	
 
 	public TrabajoGraduacion consultarTrabajoGraduacion(String codigotg)
@@ -578,6 +598,18 @@ public Etapa consultaretapa(String numeroetapa)
 			regAfectados+=contador;
 		}else{
 			//si no existe no elimina.
+			regAfectados="0";
+		}
+		return regAfectados;
+	}
+	public String eliminar(Bitacora bitacora){
+		String regAfectados="filas afectadas= ";
+		int contador=0;
+		if(verificarIntegridad(bitacora,6)){
+			//borrar si existe
+			contador+=db.delete("BITACORA", "IDBITACORA='"+bitacora.getIdbitacora()+"'", null);
+			regAfectados+=contador;
+		}else{
 			regAfectados="0";
 		}
 		return regAfectados;
@@ -774,6 +806,23 @@ public Etapa consultaretapa(String numeroetapa)
 		}else{
 			return "Registro con CODIGO de especialidad " + tespecialidad.getIDespecialidad()
 					+ " no existe";
+		}
+	}
+	public String actualizar(Bitacora bitacora){
+		if(verificarIntegridad(bitacora,6)){
+			String[] id = {bitacora.getIdbitacora()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("IDBITACORA",bitacora.getIdbitacora());
+			cv.put("NTG",bitacora.getNtg());
+			cv.put("QUIEN",bitacora.getQuien());
+			cv.put("LUGAR",bitacora.getLugar());
+			cv.put("ETAPADESARROLLADA",bitacora.getEtapadesarrollada());
+			cv.put("HORAINICIO",bitacora.getHorainicio());
+			cv.put("HORAFIN",bitacora.getHorafin());
+			db.update("BITACORA", cv, "IDBITACORA = ?", id);
+			return "Registro actualizado correctamente";
+		}else{
+			return "Registro con codigo "+bitacora.getIdbitacora()+" no existe";
 		}
 	}
 	
