@@ -634,7 +634,7 @@ public Etapa consultaretapa(String numeroetapa)
 			regAfectados+=contador;
 		}else{
 			//si no existe no elimina.
-			regAfectados="0";
+			regAfectados="filas afectadas= 0";
 		}
 		return regAfectados;
 	}
@@ -646,7 +646,7 @@ public Etapa consultaretapa(String numeroetapa)
 			contador+=db.delete("BITACORA", "IDBITACORA='"+bitacora.getIdbitacora()+"'", null);
 			regAfectados+=contador;
 		}else{
-			regAfectados="0";
+			regAfectados="filas afectadas= 0";
 		}
 		return regAfectados;
 	}
@@ -659,7 +659,7 @@ public Etapa consultaretapa(String numeroetapa)
 			contador+=db.delete("REGISTROBITACORA", where, null);
 			regAfectados+=contador;
 		}else{
-			regAfectados="0";
+			regAfectados="filas afectadas= 0";
 		}
 		return regAfectados;
 	}

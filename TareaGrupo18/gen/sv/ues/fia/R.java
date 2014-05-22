@@ -362,6 +362,7 @@ public final class R {
         public static final int title_activity_institucion_modificar=0x7f05002b;
         public static final int title_activity_perfil_consultar=0x7f050015;
         public static final int title_activity_perfil_elimiar=0x7f050014;
+        public static final int title_activity_perfil_eliminar=0x7f050071;
         public static final int title_activity_perfil_insertar=0x7f050013;
         public static final int title_activity_perfil_menu=0x7f05000e;
         public static final int title_activity_perfil_modificar=0x7f050016;
