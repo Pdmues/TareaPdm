@@ -32,7 +32,7 @@ public class PerfilInsertar extends Activity {
 		String regInsertados;
 		Perfil perfil=new Perfil();
 		perfil.setNperfil(Numperfil);
-		perfil.setNperfil(Nestper);
+		perfil.setEstado(Nestper);
 		perfil.setObservaciones(observacionesperfil);
 		helper.abrir();
 		regInsertados=helper.insertar(perfil);

@@ -237,6 +237,22 @@ public class ControladorBDG18
                                  "THEN RAISE(ABORT, 'No se puede eliminar la evaluacion')"+
                                  "END;"+
                            " END");
+				
+
+				//eliminar institucion verificando que no exixta un perfil
+				db.execSQL("CREATE TRIGGER FK_INSTITUCION_INSTITUCIONELIMINAR "+
+
+                           "BEFORE DELETE ON INSTITUCION "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                 "SELECT raise(rollback, 'No se puede eliminar Institucion')"+
+                                 "WHERE" +
+                                 	"(SELECT NPERFERFIL FROM PERFIL WHERE old.IDISTITUCION=NPERFERFIL )" +
+                                 "IS NOT NULL;"+
+                            "END;");
+				
+				
 			}
 			catch(SQLException e)
 			{
@@ -284,7 +300,7 @@ public class ControladorBDG18
 		String regInsertados="Registro Insertado Nº= ";
 		long contador=0;
 		ContentValues per = new ContentValues();
-		per.put("NPERFIL", perfil.getNperfil());
+		per.put("NPERFERFIL", perfil.getNperfil());
 		per.put("ESTADO", perfil.getEstado());
 		per.put("OBSERVACIONES",perfil.getObservaciones());
 		contador=db.insert("PERFIL", null, per);
@@ -640,23 +656,30 @@ public Etapa consultaretapa(String numeroetapa)
 
 	public String eliminar(Institucion institucion)
 	{
-		String regAfectados="filas afectadas= ";
-		int contador=0;
-		if (verificarIntegridad(institucion,1)) 
+		try
 		{
-			regAfectados="0";
-			//aplica para cascada
-			//borrar registros de notas
-			//contador+=db.delete("nota","carnet='"+alumno.getCarnet()+"'", null); ¨
+			String regAfectados="filas afectadas= ";
+			int contador=0;
+			if (verificarIntegridad(institucion,1)) 
+			{
+				regAfectados="0";
+				//aplica para cascada
+				//borrar registros de notas
+				//contador+=db.delete("nota","carnet='"+alumno.getCarnet()+"'", null); ¨
+			}
+			else
+			{
+				//borrar los registros de alumno
+				contador+=db.delete("INSTITUCION", "IDISTITUCION='"+institucion.getIdindtitucion()+"'",null);
+				regAfectados+=contador;
+			}
+			return regAfectados;
 		}
-		else
+		catch (Exception e)
 		{
-			//borrar los registros de alumno
-			contador+=db.delete("INSTITUCION", "IDISTITUCION='"+institucion.getIdindtitucion()+"'",
-			null);
-			regAfectados+=contador;
+			
+			return e.getMessage()+" Error de integridad";
 		}
-		return regAfectados;
 	}
 	//eliminar grupo
 	public String eliminar(Grupo grupo)
