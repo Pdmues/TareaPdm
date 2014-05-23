@@ -8,6 +8,7 @@ import sv.ues.fia.R.layout;
 import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -30,6 +31,9 @@ public class EvaluacionEtapaConsultar extends Activity {
 
 	public void consultarEvaluacionEtapa(View v)
 	{
+		if(TextUtils.isEmpty(consultarevaluacionetapanumero.getText().toString())||TextUtils.isEmpty(consultarevaluacionetapacarnet.getText().toString()))
+		{Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();}
+		else{
 		controlhelper.abrir();
 		EvaluacionEtapa evaluacione=controlhelper.consultarEvaluacionEtapa(consultarevaluacionetapanumero.getText().toString(), consultarevaluacionetapacarnet.getText().toString());
 		controlhelper.cerrar();
@@ -42,5 +46,6 @@ public class EvaluacionEtapaConsultar extends Activity {
 		else{
 			consultarevaluacionetapanota.setText(""+evaluacione.getNota());
 		}
+	}
 	}
 }

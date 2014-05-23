@@ -3,6 +3,7 @@ package sv.ues.fia.evaluacionetapa;
 import sv.ues.fia.R;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import sv.ues.fia.ControladorBDG18;
@@ -25,6 +26,11 @@ public class EvaluacionEtapaInsertar extends Activity {
 	}
 
 	public void InsertarEvaluacionEtapa(View v){
+		if(TextUtils.isEmpty(numeroetapainsertar.getText().toString())||TextUtils.isEmpty(numeroetapainsertar.getText().toString())||TextUtils.isEmpty(notaetapainsertar.getText().toString()))
+		{
+			Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();
+		}
+		else{
 		String numeroetapa=numeroetapainsertar.getText().toString();
 		String carnet=carnetinsertar.getText().toString();
 		String nota=notaetapainsertar.getText().toString();
@@ -39,7 +45,7 @@ public class EvaluacionEtapaInsertar extends Activity {
 		helper.abrir();
 		insertados=helper.insertar(eva);
 		helper.cerrar();
-		Toast.makeText(this, insertados, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, insertados, Toast.LENGTH_SHORT).show();}
 		
 	}
 	public void limpiarEvaluacionEtapaInsertar(View v){
