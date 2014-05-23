@@ -312,7 +312,7 @@ public class ControladorBDG18
                            " END");
 				
 
-				//eliminar institucion verificando que no exixta un perfil
+				//eliminar institucion verificando que no exista un perfil
 				db.execSQL("CREATE TRIGGER FK_INSTITUCION_INSTITUCIONELIMINAR "+
 
                            "BEFORE DELETE ON INSTITUCION "+
@@ -321,7 +321,31 @@ public class ControladorBDG18
                            "BEGIN "+
                                  "SELECT raise(rollback, 'No se puede eliminar Institucion')"+
                                  "WHERE" +
-                                 	"(SELECT NPERFERFIL FROM PERFIL WHERE old.IDISTITUCION=NPERFERFIL )" +
+                                 	"(SELECT IDISTITUCION FROM PERFIL WHERE old.IDISTITUCION=IDISTITUCION )" +
+                                 "IS NOT NULL;"+
+                            "END;");
+				//eliminar trabajograduacion verificando que no exista un etapa
+				db.execSQL("CREATE TRIGGER FK_tgraduacion_tgraduacionELIMINAR_bitacora "+
+
+                           "BEFORE DELETE ON TRABAJOGRADUACION "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                 "SELECT raise(rollback, 'No se puede eliminar Trabajo de Graduacion')"+
+                                 "WHERE" +
+                                 	"(SELECT NTG FROM BITACORA WHERE old.NTG=NTG )" +
+                                 "IS NOT NULL;"+
+                            "END;");
+				//eliminar trabajograduacion verificando que no exista un bitacora
+				db.execSQL("CREATE TRIGGER FK_tgraduacion_tgraduacionELIMINAR_etapa "+
+
+                           "BEFORE DELETE ON TRABAJOGRADUACION "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                 "SELECT raise(rollback, 'No se puede eliminar Trabajo de Graduacion')"+
+                                 "WHERE" +
+                                 	"(SELECT NTG FROM ETAPA WHERE old.NTG=NTG )" +
                                  "IS NOT NULL;"+
                             "END;");
 				
