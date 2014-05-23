@@ -4,6 +4,7 @@ import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,6 +21,11 @@ public class BitacoraEliminar extends Activity {
 	}
 
 	public void eliminarBitacora(View v){
+		//verificar que los campos no esten vacios
+		if(TextUtils.isEmpty(editIdBitacora.getText().toString())){
+			Toast.makeText(this, "El Campo esta vacio", Toast.LENGTH_SHORT).show();
+		}
+		else{//si no estan vacios ejecuta el metodo
 		String regEliminadas;
 		Bitacora bitacora = new Bitacora();
 		bitacora.setIdbitacora(Integer.parseInt(editIdBitacora.getText().toString()));
@@ -27,5 +33,6 @@ public class BitacoraEliminar extends Activity {
 		regEliminadas=helper.eliminar(bitacora);
 		helper.cerrar();
 		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		}
 	}
 }

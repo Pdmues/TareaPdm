@@ -5,6 +5,7 @@ import sv.ues.fia.ControladorBDG18;
 //import android.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +23,12 @@ public void onCreate(Bundle savedInstanceState){
 	editnespecialidad = (EditText) findViewById(R.id.editnomespecialidad);
 }
 public void insertarTipoEspecialidad(View v){
+	//verificar que los campos no esten vacios
+	if(TextUtils.isEmpty(editidespecialidad.getText().toString()) ||
+			TextUtils.isEmpty(editnespecialidad.getText().toString())){
+		Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();
+	}
+	else{//si no estan vacios ejecuta el metodo
 	String idTEspecialidad = editidespecialidad.getText().toString();
 	String  nomespecialidad = editnespecialidad.getText().toString();
 	String regInsertados;
@@ -31,6 +38,7 @@ public void insertarTipoEspecialidad(View v){
 	helper.abrir();
 	regInsertados=helper.insertar(tespecialidad);
 	Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+	}
 }
 public void limpiarTexto(View v) 
 {

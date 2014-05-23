@@ -4,6 +4,7 @@ import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,6 +33,17 @@ public class BitacoraModificar extends Activity {
 	}
 
 	public void actualizarBitacora(View v){
+		//verificar que los campos no esten vacios
+		if(TextUtils.isEmpty(editIdBitacora.getText().toString()) ||
+				TextUtils.isEmpty(editNTG.getText().toString()) ||
+				TextUtils.isEmpty(editQuien.getText().toString()) ||
+				TextUtils.isEmpty(editLugar.getText().toString()) ||
+				TextUtils.isEmpty(editEtdesarrollada.getText().toString()) ||
+				TextUtils.isEmpty(edithorainicio.getText().toString()) ||
+				TextUtils.isEmpty(edithorafin.getText().toString())){
+			Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();
+		}
+		else{//si no estan vacios ejecuta el metodo
 		Bitacora bita = new Bitacora();
 		bita.setIdbitacora(Integer.parseInt(editIdBitacora.getText().toString()));
 		bita.setNtg(editNTG.getText().toString());
@@ -45,6 +57,7 @@ public class BitacoraModificar extends Activity {
 		String estado = helper.actualizar(bita);
 		helper.cerrar();
 		Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+		}
 	}
 	public void limpiarTexto(View v) {
 		editIdBitacora.setText("");
