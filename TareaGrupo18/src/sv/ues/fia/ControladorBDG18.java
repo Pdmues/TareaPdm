@@ -273,6 +273,30 @@ public class ControladorBDG18
                                 "THEN RAISE(ABORT, 'No existe el N° de Trabajo de graduacion')"+
                                 "END;"+
                             "END");
+				//eliminar Bitacora verificando que no exista un Trabajo de graduacion
+				db.execSQL("CREATE TRIGGER FK_BITACORA_BITACORAELIMINAR "+
+
+                           "BEFORE DELETE ON BITACORA "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                 "SELECT raise(rollback, 'No se puede eliminar Bitacora')"+
+                                 "WHERE" +
+                                 	"(SELECT NTG FROM REGISTROBITACORA WHERE old.NTG=NTG )" +
+                                 "IS NOT NULL;"+
+                            "END;");
+				//eliminar Bitacora verificando que no exista un Trabajo de graduacion
+				db.execSQL("CREATE TRIGGER FK_TIPOESPECIALIDAD_TIPOESPECIALIDADELIMINAR "+
+
+                           "BEFORE DELETE ON TIPOESPECIALIDAD "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                 "SELECT raise(rollback, 'No se puede eliminar Bitacora')"+
+                                 "WHERE" +
+                                 	"(SELECT IDESPECIALIDAD FROM ESPECIALIDAD WHERE old.IDESPECIALIDAD=IDESPECIALIDAD )" +
+                                 "IS NOT NULL;"+
+                            "END;");
 
 				//eliminar evaluacion que exista etapa
 				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ETAPAELIMINAR "+
