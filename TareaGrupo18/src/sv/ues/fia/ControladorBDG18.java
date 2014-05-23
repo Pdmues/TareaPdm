@@ -352,7 +352,7 @@ public String insertar(Perfil perfil)
 	String regInsertados="Registro Insertado Nº= ";
 	long contador=0;
 	ContentValues per = new ContentValues();
-	per.put("NPERFERFIL", perfil.getNperfil());
+	per.put("NPERFIL", perfil.getNperfil());
 	per.put("ESTADO", perfil.getEstado());
 	per.put("OBSERVACIONES",perfil.getObservaciones());
 	per.put("NGRUPO",perfil.getNgrupo());
@@ -377,7 +377,7 @@ public String insertar(Facultad facultad)
 	ContentValues facu = new ContentValues();
 	facu.put("IDFACULTAD", facultad.getIDfacultad());
 	facu.put("NOMBFACULTAD", facultad.getNombFacultad());
-	contador=db.insert("PERFIL", null, facu);
+	contador=db.insert("FACULTAD", null, facu);
 	if(contador==-1 || contador==0)
 	{
 		regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
