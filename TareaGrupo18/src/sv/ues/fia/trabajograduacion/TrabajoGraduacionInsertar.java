@@ -28,18 +28,29 @@ public class TrabajoGraduacionInsertar extends Activity {
 
 	public void insertarTrabajoGraduacion(View v) 
 	{
-		String ntg=editNTG.getText().toString();
-		String np=editNP.getText().toString();
-		String pa=editPA.getText().toString();
-		String regInsertados;
-		TrabajoGraduacion tgraduacion=new TrabajoGraduacion();
-		tgraduacion.setNtg(Integer.parseInt(ntg));
-		tgraduacion.setNperfil(Integer.parseInt(np));
-		tgraduacion.setPorcentajea(Float.parseFloat(pa));
-		helper.abrir();
-		regInsertados=helper.insertar(tgraduacion);
-		helper.cerrar();
-		Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+		if(editNTG.getText().toString().equals("")||editNP.getText().toString().equals("")
+				||editPA.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editNTG.setText("");
+			editNP.setText("");
+			editPA.setText("");
+		}
+		else
+		{
+			String ntg=editNTG.getText().toString();
+			String np=editNP.getText().toString();
+			String pa=editPA.getText().toString();
+			String regInsertados;
+			TrabajoGraduacion tgraduacion=new TrabajoGraduacion();
+			tgraduacion.setNtg(Integer.parseInt(ntg));
+			tgraduacion.setNperfil(Integer.parseInt(np));
+			tgraduacion.setPorcentajea(Float.parseFloat(pa));
+			helper.abrir();
+			regInsertados=helper.insertar(tgraduacion);
+			helper.cerrar();
+			Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+		}
 	}
 	public void limpiarTexto(View v) 
 	{

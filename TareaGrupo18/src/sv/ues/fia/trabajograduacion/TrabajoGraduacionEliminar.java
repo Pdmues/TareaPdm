@@ -23,13 +23,20 @@ public class TrabajoGraduacionEliminar extends Activity {
 
 	public void eliminarTrabajoGraduacion(View v)
 	{
-		String regEliminadas;
-		TrabajoGraduacion tgraduacion=new TrabajoGraduacion();
-		tgraduacion.setNtg(Integer.parseInt(editECTG.getText().toString()));
-		controlhelper.abrir();
-		regEliminadas=controlhelper.eliminar(tgraduacion);
-		controlhelper.cerrar();
-		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		if(editECTG.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String regEliminadas;
+			TrabajoGraduacion tgraduacion=new TrabajoGraduacion();
+			tgraduacion.setNtg(Integer.parseInt(editECTG.getText().toString()));
+			controlhelper.abrir();
+			regEliminadas=controlhelper.eliminar(tgraduacion);
+			controlhelper.cerrar();
+			Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }

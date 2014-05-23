@@ -26,18 +26,28 @@ public class TrabajoGraduacionConsultar extends Activity {
 
 	public void consultarTrabajoGraduacion(View v) 
 	{
-		helper.abrir();
-		TrabajoGraduacion tgard=helper.consultarTrabajoGraduacion(editCNTgrad.getText().toString());
-		helper.cerrar();
-		if(tgard == null)
-		Toast.makeText(this, "La institucion con codigo " +
-				editCNTgrad.getText().toString() +
-		" no encontrado", Toast.LENGTH_LONG).show();
+		if(editCNTgrad.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editCNTgrad.setText("");
+			editNPerf.setText("");
+			editPAvance.setText("");
+		}
 		else
 		{
-			editCNTgrad.setText(tgard.getNtg()+"");
-			editNPerf.setText(tgard.getNperfil()+"");
-			editPAvance.setText(tgard.getPorcentajea()+"");
+			helper.abrir();
+			TrabajoGraduacion tgard=helper.consultarTrabajoGraduacion(editCNTgrad.getText().toString());
+			helper.cerrar();
+			if(tgard == null)
+			Toast.makeText(this, "La institucion con codigo " +
+					editCNTgrad.getText().toString() +
+			" no encontrado", Toast.LENGTH_LONG).show();
+			else
+			{
+				editCNTgrad.setText(tgard.getNtg()+"");
+				editNPerf.setText(tgard.getNperfil()+"");
+				editPAvance.setText(tgard.getPorcentajea()+"");
+			}
 		}
 	}
 	public void limpiarTexto(View v)
