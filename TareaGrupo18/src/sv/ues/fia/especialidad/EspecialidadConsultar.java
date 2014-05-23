@@ -24,16 +24,25 @@ public class EspecialidadConsultar extends Activity {
 
 	public void consultarEspecialidad(View v) 
 	{
-		helper.abrir();
-		Especialidad especia=helper.consultarEspecialidad(editCEsp.getText().toString());
-		helper.cerrar();
-		if(especia == null)
-		Toast.makeText(this, "La institucion con codigo " +
-				editCEsp.getText().toString() +
-		" no encontrado", Toast.LENGTH_LONG).show();
+		if(editCEsp.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editCEsp.setText("");
+			editCDoc.setText("");
+		}
 		else
 		{
-			editCDoc.setText(especia.getIdmaestro().toString());
+			helper.abrir();
+			Especialidad especia=helper.consultarEspecialidad(editCEsp.getText().toString());
+			helper.cerrar();
+			if(especia == null)
+			Toast.makeText(this, "La institucion con codigo " +
+					editCEsp.getText().toString() +
+			" no encontrado", Toast.LENGTH_LONG).show();
+			else
+			{
+				editCDoc.setText(especia.getIdmaestro().toString());
+			}
 		}
 	}
 	public void limpiarTexto(View v)

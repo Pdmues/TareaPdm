@@ -15,10 +15,12 @@
 	</TableRow>
 	<TableRow>
 		<TextView android:text="@string/cfmaestro" />
+
 		<EditText
-			android:id="@+id/editMCFMaestro"
-			android:inputType="text"
-			android:maxLength="30" />
+		    android:id="@+id/editMCFMaestro"
+		    android:inputType="number"
+		    android:maxLength="30" />
+
 	</TableRow>
 	<TableRow>
 		<Button

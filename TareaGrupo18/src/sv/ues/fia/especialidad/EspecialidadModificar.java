@@ -24,13 +24,22 @@ public class EspecialidadModificar extends Activity {
 
 	public void actualizarEspecialidad(View v) 
 	{
-		Especialidad especialidad = new Especialidad();
-		especialidad.setIdEspecialidad(Integer.parseInt(editMCEsp.getText().toString()));
-		especialidad.setIdmaestro(editMCDFEsp.getText().toString());
-		helper.abrir();
-		String estado = helper.actualizar(especialidad);
-		helper.cerrar();
-		Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+		if(editMCEsp.getText().toString().equals("")||editMCDFEsp.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editMCEsp.setText("");
+			editMCDFEsp.setText("");
+		}
+		else
+		{
+			Especialidad especialidad = new Especialidad();
+			especialidad.setIdEspecialidad(Integer.parseInt(editMCEsp.getText().toString()));
+			especialidad.setIdmaestro(editMCDFEsp.getText().toString());
+			helper.abrir();
+			String estado = helper.actualizar(especialidad);
+			helper.cerrar();
+			Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+		}
 	}
 	public void limpiarTexto(View v) 
 	{

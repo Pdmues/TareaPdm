@@ -22,13 +22,20 @@ public class EspecialidadEliminar extends Activity {
 
 	public void eliminarEspecialidad(View v)
 	{
-		String regEliminadas;
-		Especialidad especialidad=new Especialidad();
-		especialidad.setIdEspecialidad(Integer.parseInt(editECEsp.getText().toString()));
-		controlhelper.abrir();
-		regEliminadas=controlhelper.eliminar(especialidad);
-		controlhelper.cerrar();
-		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		if(editECEsp.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String regEliminadas;
+			Especialidad especialidad=new Especialidad();
+			especialidad.setIdEspecialidad(Integer.parseInt(editECEsp.getText().toString()));
+			controlhelper.abrir();
+			regEliminadas=controlhelper.eliminar(especialidad);
+			controlhelper.cerrar();
+			Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }

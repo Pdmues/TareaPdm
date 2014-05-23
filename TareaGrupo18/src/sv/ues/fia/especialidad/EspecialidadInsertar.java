@@ -24,16 +24,25 @@ public class EspecialidadInsertar extends Activity {
 
 	public void insertarEspecialidad(View v) 
 	{
-		String cespecialidad=editCodigoEsp.getText().toString();
-		String nespecialidad=editCFMAestro.getText().toString();
-		String regInsertados;
-		Especialidad especialidad=new Especialidad();
-		especialidad.setIdEspecialidad(Integer.parseInt(cespecialidad));
-		especialidad.setIdmaestro(nespecialidad);
-		helper.abrir();
-		regInsertados=helper.insertar(especialidad);
-		helper.cerrar();
-		Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+		if(editCodigoEsp.getText().toString().equals("")||editCFMAestro.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editCodigoEsp.setText("");
+			editCFMAestro.setText("");
+		}
+		else
+		{
+			String cespecialidad=editCodigoEsp.getText().toString();
+			String nespecialidad=editCFMAestro.getText().toString();
+			String regInsertados;
+			Especialidad especialidad=new Especialidad();
+			especialidad.setIdEspecialidad(Integer.parseInt(cespecialidad));
+			especialidad.setIdmaestro(nespecialidad);
+			helper.abrir();
+			regInsertados=helper.insertar(especialidad);
+			helper.cerrar();
+			Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+		}
 	}
 	public void limpiarTexto(View v) 
 	{
