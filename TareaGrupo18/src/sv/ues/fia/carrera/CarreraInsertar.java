@@ -13,6 +13,7 @@ public class CarreraInsertar extends Activity {
 	ControladorBDG18 helper;
 	EditText editIdcarr;
 	EditText editNmcarr;
+	EditText editfacultad;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,16 +21,19 @@ public class CarreraInsertar extends Activity {
 		helper = new ControladorBDG18(this);
 		editIdcarr = (EditText) findViewById(R.id.editICcarrera);
 		editNmcarr = (EditText) findViewById(R.id.editINNomb);
+		editfacultad=(EditText) findViewById(R.id.editfacu);
 	}
 
 	public void insertarCarrera(View v) 
 	{
 		String ccarrera=editIdcarr.getText().toString();
 		String Ncarr= editNmcarr.getText().toString();
+		String idfacultad = editfacultad.getText().toString();
 		String regInsertados;
 		Carrera carrera=new Carrera();
-		carrera.setIdcarrera(Integer.parseInt(ccarrera));
+		carrera.setIdcarrera(ccarrera);
 		carrera.setNombcarrera(Ncarr);
+		carrera.setIdfacultad(idfacultad);
 		helper.abrir();
 		regInsertados=helper.insertar(carrera);
 		helper.cerrar();
@@ -39,6 +43,7 @@ public class CarreraInsertar extends Activity {
 	{
 		editIdcarr.setText("");
 		editNmcarr.setText("");
+		editfacultad.setText("");
 	}
 
 }

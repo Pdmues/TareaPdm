@@ -112,6 +112,9 @@
     <string name="iddocente">Id Docente</string>
     <string name="tiporeunion">Tipo de reunion</string>
     <string name="fecha">fecha</string>
+   	<string name="infofacu">Facultad</string>
+	<string name="numeroinstitucion">ID institucion</string>
+	<string name="numerogrupo">Numero de grupo</string>
     
     
     

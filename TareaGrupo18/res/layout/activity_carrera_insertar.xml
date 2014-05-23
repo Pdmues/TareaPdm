@@ -11,10 +11,23 @@
 
 		<EditText
 		    android:id="@+id/editICcarrera"
-		    android:inputType="number"
+		    android:inputType="text"
 		    android:maxLength="15" />
 
 		</TableRow>
+		
+	<TableRow>
+		<TextView
+		    style="@style/estilo1" 
+		    android:text="@string/infofacu"/>
+
+		<EditText
+		    android:id="@+id/editfacu"
+		    android:inputType="text"
+		    android:maxLength="15" />
+
+		</TableRow>
+		
 	<TableRow>
 		<TextView 
 		    style="@style/estilo1"
@@ -22,7 +35,7 @@
 
 		<EditText
 		    android:id="@+id/editINNomb"
-		    android:inputType="number"
+		    android:inputType="text"
 		    android:maxLength="50" />
 
 	</TableRow>

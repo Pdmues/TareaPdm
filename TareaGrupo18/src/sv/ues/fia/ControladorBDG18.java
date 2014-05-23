@@ -43,6 +43,13 @@ public class ControladorBDG18
     		{"NGRUPO","IDDOCENTE"};	
     private static final String[]camposetapa=new String[]
     		{"NETAPA","NTG","FECHA"};
+    private static final String[]camposCarrera = new String []
+			{"IDCARRERA","NOMBCARRERA","IDFACULTAD"};
+	private static final String[]camposPerfil = new String []
+			{"NPERFIL,ESTADO,OBSERVACIONES","NGRUPO","IDINSTITUCION"};
+    private static final String[]camposFacultad = new String []
+			{"IDFACULTAD,NOMBCARRERA"};
+    
 	public ControladorBDG18(Context ctx) 
 	{
 		this.context = ctx;
@@ -119,14 +126,17 @@ public class ControladorBDG18
 						"("+
 						   "IDCARRERA  		       VARCHAR2(15)              not null PRIMARY KEY,"+
 						   "NOMBCARRERA            VARCHAR2(50)         not null"+
+						   "IDFACULTAD				VARCHAR2(50)		not null"+				
 						");");
 				
 				//Registro de perfil
 				db.execSQL("create table PERFIL"+ 
 						"("+
-						   "NPERFERFIL  		 INTEGER           not null PRIMARY KEY,"+
+						   "NPERFIL  		 INTEGER           not null PRIMARY KEY,"+
+						   "NGRUPO			 VARCHAR2(10)			not null"+		
 						   "ESTADO            	VARCHAR2(10)         not null,"+
 						   "OBSERVACIONES		VARCHAR2(50)		 not null"+
+						   "IDINSTITUCION		INTEGER					not null"+	
 						");");
 				
 				//Registro de facultad
@@ -134,7 +144,8 @@ public class ControladorBDG18
 						"("+
 						   "IDFACULTAD  		    VARCHAR2(50)          not null PRIMARY KEY,"+
 						   "NOMBFACULTAD            VARCHAR2(50)         not null"+
-						");");
+						 ");");
+
 
 				db.execSQL("CREATE TABLE GRUPO"+
 						"("+
@@ -276,64 +287,70 @@ public class ControladorBDG18
 	}
 	
 		
-	public String insertar(Carrera carrera)
+	//metodo para insertar carrera
+public String insertar(Carrera carrera)
+{
+	String regInsertados="Registro Insertado Nº= ";
+	long contador=0;
+	ContentValues carr = new ContentValues();
+	carr.put("IDCARRERA", carrera.getIdcarrera());
+	carr.put("NOMBCARRERA",carrera.getNombcarrera());
+	carr.put("IDFACULTAD",carrera.getIdfacultad());
+	contador=db.insert("CARRERA", null, carr);
+	if(contador==-1 || contador==0)
 	{
-		String regInsertados="Registro Insertado Nº= ";
-		long contador=0;
-		ContentValues carr = new ContentValues();
-		carr.put("IDCARRERA", carrera.getIdcarrera());
-		carr.put("NOMBCARRERA",carrera.getNombcarrera());
-		contador=db.insert("CARRERA", null, carr);
-		if(contador==-1 || contador==0)
-		{
-			regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
-		}
-		else 
-		{
-			regInsertados=regInsertados+contador;
-		}
-		return regInsertados;
+		regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
 	}
-	
-	public String insertar(Perfil perfil)
+	else 
 	{
-		String regInsertados="Registro Insertado Nº= ";
-		long contador=0;
-		ContentValues per = new ContentValues();
-		per.put("NPERFERFIL", perfil.getNperfil());
-		per.put("ESTADO", perfil.getEstado());
-		per.put("OBSERVACIONES",perfil.getObservaciones());
-		contador=db.insert("PERFIL", null, per);
-		if(contador==-1 || contador==0)
-		{
-			regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
-		}
-		else 
-		{
-			regInsertados=regInsertados+contador;
-		}
-		return regInsertados;
+		regInsertados=regInsertados+contador;
 	}
-	
-	public String insertar(Facultad facultad)
+	return regInsertados;
+}
+
+//metodo para insertar perfil
+public String insertar(Perfil perfil)
+{
+	String regInsertados="Registro Insertado Nº= ";
+	long contador=0;
+	ContentValues per = new ContentValues();
+	per.put("NPERFERFIL", perfil.getNperfil());
+	per.put("ESTADO", perfil.getEstado());
+	per.put("OBSERVACIONES",perfil.getObservaciones());
+	per.put("NGRUPO",perfil.getNgrupo());
+	per.put("IDINSTITUCION",perfil.getIdinstitucion());
+	contador=db.insert("PERFIL", null, per);
+	if(contador==-1 || contador==0)
 	{
-		String regInsertados="Registro Insertado Nº= ";
-		long contador=0;
-		ContentValues facu = new ContentValues();
-		facu.put("IDFACULTAD", facultad.getIDfacultad());
-		facu.put("NOMBFACULTAD", facultad.getNombFacultad());
-		contador=db.insert("PERFIL", null, facu);
-		if(contador==-1 || contador==0)
-		{
-			regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
-		}
-		else 
-		{
-			regInsertados=regInsertados+contador;
-		}
-		return regInsertados;
+		regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
 	}
-	
+	else 
+	{
+		regInsertados=regInsertados+contador;
+	}
+	return regInsertados;
+}
+
+//metodo para insertar facultad
+public String insertar(Facultad facultad)
+{
+	String regInsertados="Registro Insertado Nº= ";
+	long contador=0;
+	ContentValues facu = new ContentValues();
+	facu.put("IDFACULTAD", facultad.getIDfacultad());
+	facu.put("NOMBFACULTAD", facultad.getNombFacultad());
+	contador=db.insert("PERFIL", null, facu);
+	if(contador==-1 || contador==0)
+	{
+		regInsertados= "Error al Insertar el registro, Registro Duplicado. Verificar inserción";
+	}
+	else 
+	{
+		regInsertados=regInsertados+contador;
+	}
+	return regInsertados;
+}
+
 	public String insertar(Institucion institucion)
 	{
 		String regInsertados="Registro Insertado Nº= ";
@@ -507,6 +524,50 @@ public class ControladorBDG18
 			return regInsertados;
 	}
 	//fin
+	 
+	//metodo para consultar carrera
+		 public Carrera consultarCarrera(String idcarrera){
+		 		
+			 String[] id = {idcarrera};
+			 Cursor cursor = db.query("CARRERA",camposCarrera,"IDCARRERA = ?",	id,null,null,null);
+			 if(cursor.moveToFirst()){
+				 Carrera tcarrera = new Carrera();
+				 tcarrera.setIdcarrera(cursor.getString(0));
+				 tcarrera.setNombcarrera(cursor.getString(1));
+				 tcarrera.setIdfacultad(cursor.getString(2));
+				 return tcarrera;
+			 }else	return null;
+		 	 }
+
+	//metodo para consultar facultada
+	public Facultad consultarFacultad(String idfacultad){
+			String[] id = {idfacultad};
+		Cursor cursor = db.query("FACULTAD",camposFacultad,"IDCARRERA = ?",	id,null,null,null);
+		if(cursor.moveToFirst()){
+			Facultad tfacultad = new Facultad();
+			tfacultad.setIDfacultad(cursor.getString(0));
+			tfacultad.setNombFacultad(cursor.getString(1));
+			return tfacultad;
+		}else return null;
+	}
+
+	//metodo para consultar perfil
+	public Perfil consultarPerfil(String idperfil){
+		String[] id = {idperfil};
+		Cursor cursor = db.query("PERFIL",camposPerfil,"NPERFIL = ?",	id,null,null,null);
+		if(cursor.moveToFirst()){
+			Perfil tperfil = new Perfil();
+			tperfil.setNperfil1(cursor.getInt(0));
+			tperfil.setEstado(cursor.getString(1));
+			tperfil.setObservaciones(cursor.getString(2));
+			tperfil.setNgrupo(cursor.getInt(3));
+			tperfil.setIdinstitucion(cursor.getInt(4));
+			return tperfil;
+		}else return null;
+	}
+		 
+	 
+	 //consultar institiucion
 	public Institucion consultarInstitucion(String codigoinst)
 	{
 		String[] id = {codigoinst};
@@ -779,7 +840,7 @@ public Etapa consultaretapa(String numeroetapa)
 	{
 		String regAfectados="filas afectadas= ";
 		int contador=0;
-		if (verificarIntegridad(carrera,1)) 
+		if (verificarIntegridad(carrera,15)) 
 		{
 			regAfectados="0";
 			//aplica para cascada
@@ -800,7 +861,7 @@ public Etapa consultaretapa(String numeroetapa)
 	{
 		String regAfectados="filas afectadas= ";
 		int contador=0;
-		if (verificarIntegridad(facultad,1)) 
+		if (verificarIntegridad(facultad,16)) 
 		{
 			regAfectados="0";
 			//aplica para cascada
@@ -821,7 +882,7 @@ public Etapa consultaretapa(String numeroetapa)
 	{
 		String regAfectados="filas afectadas= ";
 		int contador=0;
-		if (verificarIntegridad(perfil,1)) 
+		if (verificarIntegridad(perfil,17)) 
 		{
 			regAfectados="0";
 			//aplica para cascada
@@ -907,6 +968,50 @@ public Etapa consultaretapa(String numeroetapa)
 			return "Registro con el codigo " + grupo.getNgrupo() + " no existe";
 		}
 	}
+	
+	//actualizar carrera
+	public String actualizar(Carrera carrera){
+		if(verificarIntegridad(carrera, 15)){
+			String[] id = {carrera.getIdcarrera()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("IDCARRERA",carrera.getIdcarrera());
+			cv.put("NOMBCARRERA", carrera.getNombcarrera());
+			cv.put("IDFACULTAD",carrera.getIdfacultad());
+			db.update("CARRERA", cv, "IDCARRERA = ?", id);
+			return "Registro Actualizado Correctamente";
+		}else	return "Registro con CODIGO de carrera " + carrera.getIdcarrera()+ " no existe";
+}
+
+
+	//actualizar facultad
+	public String actualizar(Facultad facultad){
+		if(verificarIntegridad(facultad, 16)){
+			String[] id = {facultad.getIDfacultad()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("IDFACULTAD",facultad.getIDfacultad());
+			cv.put("NOMBFACULTAD", facultad.getNombFacultad());
+			db.update("FACULTAD", cv, "IDFACULTAD = ?", id);
+			return "Registro Actualizado Correctamente";
+		}
+		else return "Registro con CODIGO de especialidad " + facultad.getIDfacultad()+ " no existe";
+}
+
+	//actualizar perfil
+	public String actualizar(Perfil perfil){
+		if(verificarIntegridad(perfil, 17)){
+			String[] id = {perfil.getNperfil()+""};
+			ContentValues cv = new ContentValues();
+			cv.put("NPERFIl",perfil.getNperfil());
+			cv.put("ESTADO",perfil.getEstado());
+			cv.put("OBSERVACIONES", perfil.getObservaciones());
+			cv.put("NGRUPO",perfil.getNgrupo());
+			cv.put("IDINSTITUCION",perfil.getIdinstitucion());
+			db.update("PERFIL", cv, "NPERFIL = ?", id);
+			return "Registro Actualizado Correctamente";
+		}else return "Registro con CODIGO de especialidad " + perfil.getNperfil()	+ " no existe";
+}
+	
+	
 	//Actualizar etapa
 	public String actualizar(Etapa etapa)
 	{
@@ -1191,7 +1296,55 @@ public Etapa consultaretapa(String numeroetapa)
 						return false;
 					}
 				}
-			
+				
+				case 16:
+				{
+					//verfiicar que exista facultad
+					Facultad facultad2 = (Facultad)dato;
+					String[] id = {facultad2.getIDfacultad()+""};
+					abrir();
+					Cursor facu = db.query("FACULTAD", null, "IDFACULTAD = ?", id, null, null,
+					null);
+					if(facu.moveToFirst())
+					{
+						//Se encontro Alumno
+						return true;
+					}
+					else return false;
+				}
+					
+				case 17:
+				{
+					//verfiicar que exista perfil
+					Perfil perfil2 = (Perfil)dato;
+					String[] id = {perfil2.getNperfil()+""};
+					abrir();
+					Cursor perf = db.query("PERFIL", null, "NPERFIL = ?", id, null, null,
+				null);
+				if(perf.moveToFirst())
+				{
+					//Se encontro Alumno
+					return true;
+				}
+				else return false;
+				}
+				
+				case 15:
+				{
+					//verfiicar que exista carrera
+					Carrera carrera2 = (Carrera)dato;
+					String[] id = {carrera2.getIdcarrera()+""};
+					abrir();
+					Cursor carr = db.query("CARRERA", null, "IDCARRERA = ?", id, null, null,
+					null);
+					if(carr.moveToFirst())
+					{
+						//Se encontro Alumno
+						return true;
+					}
+					else return false;
+				}
+						
 			default:
 			return false;
 		}

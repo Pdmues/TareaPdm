@@ -14,6 +14,9 @@ public class PerfilInsertar extends Activity {
 	EditText editNumper;
 	EditText editNestper;
 	EditText editObsper;
+	EditText editNgrupo;
+	EditText editIDinstitucion;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,6 +25,8 @@ public class PerfilInsertar extends Activity {
 		editNumper = (EditText) findViewById(R.id.editNPerfil);
 		editNestper = (EditText) findViewById(R.id.editEsPerfil);
 		editObsper = (EditText) findViewById(R.id.editObPerfil);
+		editNgrupo = (EditText) findViewById(R.id.editNumerogrupo);
+		editIDinstitucion = (EditText) findViewById(R.id.editIDinstitucion);
 	}
 
 	public void insertarPerfil(View v) 
@@ -29,11 +34,15 @@ public class PerfilInsertar extends Activity {
 		String Numperfil=editNumper.getText().toString();
 		String Nestper = editNestper.getText().toString();
 		String observacionesperfil=editObsper.getText().toString();
+		String ngroup= editNgrupo.getText().toString();
+		String insti=editIDinstitucion.getText().toString();
 		String regInsertados;
 		Perfil perfil=new Perfil();
-		perfil.setNperfil(Numperfil);
+		perfil.setNperfil1(Integer.parseInt(Numperfil));
 		perfil.setEstado(Nestper);
 		perfil.setObservaciones(observacionesperfil);
+		perfil.setIdinstitucion(Integer.parseInt(insti));
+		perfil.setNgrupo(Integer.parseInt(ngroup));
 		helper.abrir();
 		regInsertados=helper.insertar(perfil);
 		helper.cerrar();
@@ -44,6 +53,8 @@ public class PerfilInsertar extends Activity {
 		editNumper.setText("");
 		editNestper.setText("");
 		editObsper.setText("");
+		editNgrupo.setText("");
+		editIDinstitucion.setText("");
 	}
 
 }

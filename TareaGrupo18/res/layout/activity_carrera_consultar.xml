@@ -12,7 +12,7 @@
 	    android:id="@+id/editCCEsp"
 	    android:layout_width="200dp"
 	    android:layout_height="wrap_content"
-	    android:inputType="number"
+	    android:inputType="text"
 	    android:maxLength="15" />
 
 	<LinearLayout
