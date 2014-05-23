@@ -1159,7 +1159,7 @@ public Etapa consultaretapa(String numeroetapa)
 		}
 	}
 	public String actualizar(Bitacora bitacora){
-		if(verificarIntegridad(bitacora,6)){
+		//if(verificarIntegridad(bitacora,6)){
 			String[] id = {bitacora.getIdbitacora()+""};
 			ContentValues cv = new ContentValues();
 			cv.put("IDBITACORA",bitacora.getIdbitacora());
@@ -1171,9 +1171,9 @@ public Etapa consultaretapa(String numeroetapa)
 			cv.put("HORAFIN",bitacora.getHorafin());
 			db.update("BITACORA", cv, "IDBITACORA = ?", id);
 			return "Registro actualizado correctamente";
-		}else{
-			return "Registro con codigo "+bitacora.getIdbitacora()+" no existe";
-		}
+		//}else{
+			//return "Registro con codigo "+bitacora.getIdbitacora()+" no existe";
+		//}
 	}
 	public String actualizar(RegistroBitacora rbit){
 		if(verificarIntegridad(rbit,11)){

@@ -126,14 +126,17 @@
     <string name="nota2">Tabla Grupo</string>
     <string name="nota3">Tabla Docente</string>
     <string name="nota4">Tabla Perfil</string>
-	<string name="nota5">Tabla Trabajo de Graduacion</string>
-	<string name="nota6">Tabla Especialidad</string>
-	<string name="nota7">Tabla Institucion</string>
-	<string name="nota8">Tabla Facultad</string>
-	<string name="nota9">Tabla Carrera</string>
-	<string name="nota10">Tabla Registro de Bitacoras</string>
-	<string name="nota11">Tabla Tipo de especialidades</string>
-	<string name="nota12">Tabla apertura de una Bitacora</string>
-	<string name="nota13">Tabla Etapa</string>
-	<string name="nota14">Tabla Evaluacion Etapa</string>
+    <string name="nota5">Tabla Trabajo de Graduacion</string>
+    <string name="nota6">Tabla Especialidad</string>
+    <string name="nota7">Tabla Institucion</string>
+    <string name="nota8">Tabla Facultad</string>
+    <string name="nota9">Tabla Carrera</string>
+    <string name="nota10">Tabla Registro de Bitacoras</string>
+    <string name="nota11">Tabla Tipo de especialidades</string>
+    <string name="nota12">Tabla apertura de una Bitacora</string>
+    <string name="nota13">Tabla Etapa</string>
+    <string name="nota14">Tabla Evaluacion Etapa</string>
+    <string name="buscar">Buscar</string>
+    <string name="title_activity_bitacora_actualizar">BitacoraActualizar</string>
+
 </resources>

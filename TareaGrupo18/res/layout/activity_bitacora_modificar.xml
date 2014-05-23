@@ -11,56 +11,11 @@
 			android:inputType="number"
 			android:maxLength="7" />
 		</TableRow>
-	<TableRow>
-		<TextView android:text="@string/ntgraduacion" />
-		<EditText
-			android:id="@+id/editNTG"
-			android:inputType="text"
-			android:maxLength="30" />
-	</TableRow>
-	<TableRow>
-		<TextView android:text="@string/Quien" />
-		<EditText
-			android:id="@+id/editQuien"
-			android:inputType="text"
-			android:maxLength="30" />
-	</TableRow>
-	<TableRow>
-		<TextView android:text="@string/Lugar" />
-		<EditText
-			android:id="@+id/editLugar"
-			android:inputType="text"
-			android:maxLength="50" />
-	</TableRow>
-	<TableRow>
-		<TextView android:text="@string/EtapaDesarrollada" />
-		<EditText
-			android:id="@+id/editEtdesarrollada"
-			android:inputType="number"
-			android:maxLength="2" />
-	</TableRow>
-	<TableRow>
-		<TextView android:text="@string/horainicio" />
-		<EditText
-			android:id="@+id/edithorainicio"
-			android:inputType="text"
-			android:maxLength="50" />
-	</TableRow>
-	<TableRow>
-		<TextView android:text="@string/horafin" />
-		<EditText
-			android:id="@+id/edithorafin"
-			android:inputType="text"
-			android:maxLength="50" />
-	</TableRow>
 	
-	<TableRow>
-		<TextView android:text="@string/opciones" />
-	</TableRow>
 	<TableRow>
 		<Button
 			android:onClick="actualizarBitacora"
-			android:text="@string/actualizar" />
+			android:text="@string/buscar" />
 		<Button
 			android:onClick="limpiarTexto"
 			android:text="@string/limpiar" />

@@ -314,6 +314,10 @@
             android:name="sv.ues.fia.CrearUsuarioActivity"
             android:label="@string/title_activity_crear_usuario" >
         </activity>
+        <activity
+            android:name="sv.ues.fia.BitacoraActualizar"
+            android:label="@string/title_activity_bitacora_actualizar" >
+        </activity>
     </application>
 
 </manifest>
