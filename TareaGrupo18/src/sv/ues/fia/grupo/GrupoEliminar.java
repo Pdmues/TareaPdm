@@ -4,6 +4,7 @@ import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +23,9 @@ public class GrupoEliminar extends Activity {
 
 	public void eliminargrupo(View v)
 	{
+		if(TextUtils.isEmpty(eliminargrupo.getText().toString()))
+		{Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();}
+		else{
 		String regEliminadas;
 		Grupo g= new Grupo();
 		g.setNgrupo(Integer.parseInt(eliminargrupo.getText().toString())) ;
@@ -29,6 +33,7 @@ public class GrupoEliminar extends Activity {
 		regEliminadas= helper.eliminar(g);
 		helper.cerrar();
 		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+	        }
 	}
 
 }

@@ -6,6 +6,7 @@ import sv.ues.fia.R.layout;
 import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -27,19 +28,22 @@ public class GrupoInsertar extends Activity {
 	}
 
 
-public void insertargrupo(View v)
-{
-String numero=numerogrupoinsertar.getText().toString();
-String docente=iddocenteinsertar.getText().toString();
-String regInsertados;
-Grupo grup=new Grupo();
-grup.setNgrupo(Integer.parseInt(numero));
-grup.setIddocente(docente);
-helper.abrir();
-regInsertados=helper.insertar(grup);
-helper.cerrar();
-Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
-}
+	public void insertargrupo(View v)
+	{
+	if(TextUtils.isEmpty(numerogrupoinsertar.getText().toString())||TextUtils.isEmpty(iddocenteinsertar.getText().toString()))
+	{Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();}
+	else{
+	String numero=numerogrupoinsertar.getText().toString();
+	String docente=iddocenteinsertar.getText().toString();
+	String regInsertados;
+	Grupo grup=new Grupo();
+	grup.setNgrupo(Integer.parseInt(numero));
+	grup.setIddocente(docente);
+	helper.abrir();
+	regInsertados=helper.insertar(grup);
+	helper.cerrar();
+	Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();}
+	}
 public void limpiarTextogrupo(View v) 
 {
 	numerogrupoinsertar.setText("");

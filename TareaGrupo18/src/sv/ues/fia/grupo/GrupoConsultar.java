@@ -4,6 +4,7 @@ import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,19 +23,23 @@ public class GrupoConsultar extends Activity {
 		iddocenteconsultar=(EditText)findViewById(R.id.editIdDocenteConsultar);
 		}
 
-public void ConsultarGrupo(View v)
-{
-	helper.abrir();
-	Grupo grupo=helper.consultarGrupo(numerogrupoconsultar.getText().toString());
-	helper.cerrar();
-	if(grupo==null)
+	public void ConsultarGrupo(View v)
 	{
-		Toast.makeText(this, "El grupo con codigo " +
-				numerogrupoconsultar.getText().toString() +" no encontrado", Toast.LENGTH_LONG).show();
+		if(TextUtils.isEmpty(numerogrupoconsultar.getText().toString()))
+		{Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();}
+		else{
+		helper.abrir();
+		Grupo grupo=helper.consultarGrupo(numerogrupoconsultar.getText().toString());
+		helper.cerrar();
+		if(grupo==null)
+		{
+			Toast.makeText(this, "El grupo con codigo " +
+					numerogrupoconsultar.getText().toString() +" no encontrado", Toast.LENGTH_LONG).show();
+		}
+		else
+			{iddocenteconsultar.setText(grupo.getIddocente().toString());}
+		   }
 	}
-	else
-		iddocenteconsultar.setText(grupo.getIddocente().toString());
-}
 public void limpiarTexto(View v)
 {
 	numerogrupoconsultar.setText("");
