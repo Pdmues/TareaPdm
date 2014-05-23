@@ -91,8 +91,10 @@
     <string name="title_activity_evaluacion_etapa_eliminar">EvaluacionEtapaEliminar</string>
     <string name="title_activity_evaluacion_etapa_insertar">EvaluacionEtapaInsertar</string>
     <string name="title_activity_evaluacion_etapa_modificar">EvaluacionEtapaModificar</string>
-    <string name="ntgraduacion">N Trabajo de Graduacion</string><string name="Numeroetapa">Numero de etapa</string>
-    <string name="nperfil">Numero de Perfil</string><string name="pavance">Porcentaje de Avance</string>
+    <string name="ntgraduacion">N Trabajo de Graduacion</string>
+    <string name="Numeroetapa">Numero de etapa</string>
+    <string name="nperfil">Numero de Perfil</string>
+    <string name="pavance">Porcentaje de Avance</string>
     <string name="nombreespecialidad">Nombre de especialidad</string>
     <string name="NotaEtapa">Nota</string>
     <string name="ccarrera">Codigo de la carrera</string>
@@ -112,11 +114,13 @@
     <string name="iddocente">Id Docente</string>
     <string name="tiporeunion">Tipo de reunion</string>
     <string name="fecha">fecha</string>
-   	<string name="infofacu">Facultad</string>
-	<string name="numeroinstitucion">ID institucion</string>
-	<string name="numerogrupo">Numero de grupo</string>
-    
-    
-    
+    <string name="infofacu">Facultad</string>
+    <string name="numeroinstitucion">ID institucion</string>
+    <string name="numerogrupo">Numero de grupo</string>
+    <string name="title_activity_menu_secundario">MenuSecundarioActivity</string>
+    <string name="title_activity_crear_usuario">CrearUsuarioActivity</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contrasena</string>
 
 </resources>

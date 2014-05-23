@@ -306,6 +306,14 @@
             android:name="sv.ues.fia.evaluacionetapa.EvaluacionEtapaModificar"
             android:label="@string/title_activity_evaluacion_etapa_modificar" >
         </activity>
+        <activity
+            android:name="sv.ues.fia.MenuSecundarioActivity"
+            android:label="@string/title_activity_menu_secundario" >
+        </activity>
+        <activity
+            android:name="sv.ues.fia.CrearUsuarioActivity"
+            android:label="@string/title_activity_crear_usuario" >
+        </activity>
     </application>
 
 </manifest>

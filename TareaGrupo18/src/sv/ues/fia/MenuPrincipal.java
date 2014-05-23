@@ -1,43 +1,43 @@
 package sv.ues.fia;
 
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
-public class MenuPrincipal extends ListActivity{
-
-	String[] menu={"Tabla Alumno","Tabla Grupo","Tabla Docente","Tabla Perfil","Trabajo de Graduacion","Tabla de Especialidad","Tabla de Institucion","Tabla de Facultad","Tabla de Carrera","Tabla de Registro de Bitacora"
-			,"Tabla Tipo de Especialidad","Tabla Bitacora","Tabla Etapa","Tabla Evaluacion de Etapa"};
-			String[]
-			activities={"alumno.AlumnoMenu","grupo.GrupoMenu","docente.DocenteMenu","perfil.PerfilMenu","trabajograduacion.TrabajoGraduacionMenu","especialidad.EspecialidadMenu","institucion.InstitucionMenu","facultad.FacultadMenu","carrera.CarreraMenu"
-					,"registrobitacora.RegistroBitacoraMenu","tipoespecialidad.TipoEspecialidadMenu","bitacora.BitacoraMenu","etapa.EtapaMenu","evaluacionetapa.EvaluacionEtapaMenu"};
-			ControladorBDG18 BDhelper;
+public class MenuPrincipal extends Activity{
+	ControladorBDG18 BDhelper;
+	EditText editusuario;
+	EditText editcontrasena;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setListAdapter(new ArrayAdapter<String>(this,
-		android.R.layout.simple_list_item_1, menu));
+		setContentView(R.layout.activity_menu_principal);
 		BDhelper=new ControladorBDG18(this);
+		editusuario=(EditText) findViewById(R.id.editusuario);
+		editcontrasena=(EditText) findViewById(R.id.editcontrasena);
 	}
 
-	@Override
-	protected void onListItemClick(ListView l,View v,int position,long id)
-	{
-		super.onListItemClick(l, v, position, id);
-		String nombreValue=activities[position];
-		try
-		{
-			Class<?>
-			clase=Class.forName("sv.ues.fia."+nombreValue);
+	public void Ingresar(View v){
+		String[] activities={"MenuSecundarioActivity","CrearUsuarioActivity"};
+		int posicion;
+		if(editusuario.getText().toString().equals("root") && editcontrasena.getText().toString().equals("root")){
+			posicion=0;
+		}else{
+			posicion=1;
+		}
+		String nombreValue=activities[posicion];
+		try{
+			Class<?> clase=Class.forName("sv.ues.fia."+nombreValue);
 			Intent inte = new Intent(this,clase);
 			this.startActivity(inte);
-		}
-		catch(ClassNotFoundException e)
-		{
+		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}
 	}
