@@ -12,7 +12,7 @@ public class PerfilInsertar extends Activity {
 
 	ControladorBDG18 helper;
 	EditText editNumper;
-	EditText editNestper;
+	EditText editESTper;
 	EditText editObsper;
 	EditText editNgrupo;
 	EditText editIDinstitucion;
@@ -23,7 +23,7 @@ public class PerfilInsertar extends Activity {
 		setContentView(R.layout.activity_perfil_insertar);
 		helper = new ControladorBDG18(this);
 		editNumper = (EditText) findViewById(R.id.editNPerfil);
-		editNestper = (EditText) findViewById(R.id.editEsPerfil);
+		editESTper = (EditText) findViewById(R.id.editEsPerfil);
 		editObsper = (EditText) findViewById(R.id.editObPerfil);
 		editNgrupo = (EditText) findViewById(R.id.editNumerogrupo);
 		editIDinstitucion = (EditText) findViewById(R.id.editIDinstitucion);
@@ -32,7 +32,7 @@ public class PerfilInsertar extends Activity {
 	public void insertarPerfil(View v) 
 	{
 		String Numperfil=editNumper.getText().toString();
-		String Nestper = editNestper.getText().toString();
+		String Nestper = editESTper.getText().toString();
 		String observacionesperfil=editObsper.getText().toString();
 		String ngroup= editNgrupo.getText().toString();
 		String insti=editIDinstitucion.getText().toString();
@@ -51,7 +51,7 @@ public class PerfilInsertar extends Activity {
 	public void limpiarTexto(View v) 
 	{
 		editNumper.setText("");
-		editNestper.setText("");
+		editESTper.setText("");
 		editObsper.setText("");
 		editNgrupo.setText("");
 		editIDinstitucion.setText("");

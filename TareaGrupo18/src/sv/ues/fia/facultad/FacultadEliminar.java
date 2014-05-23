@@ -28,7 +28,7 @@ public class FacultadEliminar extends Activity {
 		else{
 		String regEliminadas;
 		Facultad facultad = new Facultad();
-		facultad.getIDfacultad();
+		facultad.setIDfacultad(editEcfacu.getText().toString());
 		controlhelper.abrir();
 		regEliminadas=controlhelper.eliminar(facultad);
 		controlhelper.cerrar();

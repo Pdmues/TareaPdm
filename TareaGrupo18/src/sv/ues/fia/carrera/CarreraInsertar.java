@@ -26,13 +26,13 @@ public class CarreraInsertar extends Activity {
 
 	public void insertarCarrera(View v) 
 	{
-		String ccarrera=editIdcarr.getText().toString();
-		String Ncarr= editNmcarr.getText().toString();
+		String codcarrera=editIdcarr.getText().toString();
+		String Nomcarr= editNmcarr.getText().toString();
 		String idfacultad = editfacultad.getText().toString();
 		String regInsertados;
 		Carrera carrera=new Carrera();
-		carrera.setIdcarrera(ccarrera);
-		carrera.setNombcarrera(Ncarr);
+		carrera.setIdcarrera(codcarrera);
+		carrera.setNombcarrera(Nomcarr);
 		carrera.setIdfacultad(idfacultad);
 		helper.abrir();
 		regInsertados=helper.insertar(carrera);

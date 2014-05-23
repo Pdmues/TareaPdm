@@ -25,7 +25,7 @@ public class CarreraConsultar extends Activity {
 	public void consultarCarrera(View v) 
 	{
 		helper.abrir();
-		Carrera carrera=helper.consultarCarrera(editCNcarrera.getText().toString());
+		Carrera carrera=helper.consultarCarrera(editCCarrera.getText().toString());
 		helper.cerrar();
 		if(carrera == null)
 		Toast.makeText(this, "La carrera con codigo " +	editCCarrera.getText().toString() +	" no encontrado", Toast.LENGTH_LONG).show();

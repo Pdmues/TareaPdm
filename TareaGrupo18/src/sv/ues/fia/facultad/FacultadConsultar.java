@@ -32,7 +32,7 @@ public void consultarFacultad(View v)
 		Toast.makeText(this, "La facultad con codigo " +	editIDFacultad.getText().toString() +" no encontrado", Toast.LENGTH_LONG).show();
 		else
 		{
-			editNFacultad.setText(facultad.getIDfacultad().toString());
+			editNFacultad.setText(facultad.getNombFacultad().toString());
 		}
 
 }

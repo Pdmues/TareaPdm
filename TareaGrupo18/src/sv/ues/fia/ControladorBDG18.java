@@ -46,9 +46,9 @@ public class ControladorBDG18
     private static final String[]camposCarrera = new String []
 			{"IDCARRERA","NOMBCARRERA","IDFACULTAD"};
 	private static final String[]camposPerfil = new String []
-			{"NPERFIL,ESTADO,OBSERVACIONES","NGRUPO","IDINSTITUCION"};
+			{"NPERFIL","ESTADO","OBSERVACIONES","NGRUPO","IDISTITUCION"};
     private static final String[]camposFacultad = new String []
-			{"IDFACULTAD,NOMBCARRERA"};
+			{"IDFACULTAD","NOMBCARRERA"};
     
 	public ControladorBDG18(Context ctx) 
 	{
@@ -127,17 +127,17 @@ public class ControladorBDG18
 						"("+
 						   "IDCARRERA  		       VARCHAR2(15)         not null PRIMARY KEY,"+
 						   "NOMBCARRERA            VARCHAR2(50)         not null,"+
-						   "IDFACULTAD				VARCHAR2(50)		not null"+				
+						   "IDFACULTAD			   VARCHAR2(50)			not null, PRIMARY KEY"+				
 						");");
 				
 				//Registro de perfil
 				db.execSQL("create table PERFIL"+ 
 						"("+
-						   "NPERFIL  		 INTEGER           not null PRIMARY KEY,"+
-						   "NGRUPO			 VARCHAR2(10)			not null,"+		
-						   "ESTADO            	VARCHAR2(10)         not null,"+
-						   "OBSERVACIONES		VARCHAR2(50)		 not null,"+
-						   "IDINSTITUCION		INTEGER					not null"+	
+						   "NPERFIL  		 	INTEGER          		  not null PRIMARY KEY,"+
+						   "ESTADO            	VARCHAR2(10)       		  not null,"+
+						   "OBSERVACIONES		VARCHAR2(50)			  not null,"+
+						   "NGRUPO			 	INTEGER					  not null PRIMARY KEY,"+		
+						   "IDISTITUCION		INTEGER					  not null PRIMARY KEY"+	
 						");");
 				
 				//Registro de facultad

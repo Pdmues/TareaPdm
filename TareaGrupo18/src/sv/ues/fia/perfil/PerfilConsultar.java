@@ -18,7 +18,7 @@ public class PerfilConsultar extends Activity {
  		super.onCreate(savedInstanceState);
  		setContentView(R.layout.activity_perfil_consultar);
 		helper = new ControladorBDG18(this);
-		editNperfil = (EditText) findViewById(R.id.editINPerfil);
+		editNperfil = (EditText) findViewById(R.id.editNPer);
 		editEperfil = (EditText) findViewById(R.id.editESTPer);
 		editOperfil = (EditText) findViewById(R.id.editOBSPer);
 }
