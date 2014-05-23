@@ -103,7 +103,8 @@ public class ControladorBDG18
 						   "IDBITACORA      	INTEGER             not null,"+
 						   "CARNET				VARCHAR(20)			NOT NULL,"+
 						   "TIPOREUNION			VARCHAR(20)			NOT NULL,"+
-						   "FECHA				VARCHAR(20)			NOT NULL"+
+						   "FECHA				VARCHAR(20)			NOT NULL,"+
+						   "PRIMARY KEY (IDBITACORA,CARNET)"+
 						");");
 				//Registro Evaluacion Etapa 
 				db.execSQL("create table EVALUACIONETAPA"+
@@ -225,6 +226,43 @@ public class ControladorBDG18
                                 "THEN RAISE(ABORT, 'No existe carnet')"+
                                 "END;"+
                             "END");
+				//Insertar un RegistroBitacora del que exista Bitacora
+				db.execSQL("CREATE TRIGGER FK_REGISTROBITACORA_BITACORA "+
+
+                           "BEFORE INSERT ON REGISTROBITACORA "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                "SELECT CASE "+
+                                "WHEN((SELECT IDBITACORA FROM BITACORA WHERE IDBITACORA= NEW.IDBITACORA)IS NULL)"+
+                                "THEN RAISE(ABORT, 'No existe la bitacora')"+
+                                "END;"+
+                            "END");
+				//Insertar un RegistroBitacora del que exista Alumno
+				db.execSQL("CREATE TRIGGER FK_REGISTROBITACORA_ALUMNO "+
+
+                           "BEFORE INSERT ON REGISTROBITACORA "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                "SELECT CASE "+
+                                "WHEN((SELECT CARNET FROM ALUMNO WHERE CARNET= NEW.CARNET)IS NULL)"+
+                                "THEN RAISE(ABORT, 'No existe el carnet del alumno')"+
+                                "END;"+
+                            "END");
+				//Insertar unA Bitacora del que exista Un TrabajodeGraduacion
+				db.execSQL("CREATE TRIGGER FK_BITACORA_TRABAJODEGRADUACION "+
+
+                           "BEFORE INSERT ON BITACORA "+
+                           "FOR EACH ROW "+
+
+                           "BEGIN "+
+                                "SELECT CASE "+
+                                "WHEN((SELECT NTG FROM TRABAJOGRADUACION WHERE NTG= NEW.NTG)IS NULL)"+
+                                "THEN RAISE(ABORT, 'No existe el N° de Trabajo de graduacion')"+
+                                "END;"+
+                            "END");
+
 				//eliminar evaluacion que exista etapa
 				db.execSQL("CREATE TRIGGER FK_EVALUACIONETAPA_ETAPAELIMINAR "+
 
