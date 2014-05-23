@@ -285,7 +285,7 @@ public class ControladorBDG18
                                  	"(SELECT NTG FROM REGISTROBITACORA WHERE old.NTG=NTG )" +
                                  "IS NOT NULL;"+
                             "END;");
-				//eliminar Bitacora verificando que no exista un Trabajo de graduacion
+				//eliminar TipoEspecialidad verificando que no exista una especialidad asignada a docente
 				db.execSQL("CREATE TRIGGER FK_TIPOESPECIALIDAD_TIPOESPECIALIDADELIMINAR "+
 
                            "BEFORE DELETE ON TIPOESPECIALIDAD "+
