@@ -6,6 +6,7 @@ import sv.ues.fia.R.layout;
 import sv.ues.fia.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -27,7 +28,11 @@ public class EvaluacionEtapaEliminar extends Activity {
 
 	public void eliminarEvaluacionEtapa(View v)
 	{
-		String regEliminadas;
+		if(TextUtils.isEmpty(numeroetapaeliminarevaluacionetapa.getText().toString())||TextUtils.isEmpty(carneteliminarevaluacionetapa.getText().toString()))
+		{Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();}
+		
+		else
+		{String regEliminadas;
 		EvaluacionEtapa evea=new EvaluacionEtapa();
 		evea.setNetapa(Integer.parseInt(numeroetapaeliminarevaluacionetapa.getText().toString()));
 		evea.setCarnet(carneteliminarevaluacionetapa.getText().toString());
@@ -36,7 +41,8 @@ public class EvaluacionEtapaEliminar extends Activity {
 		controlhelper.abrir();
 		regEliminadas=controlhelper.eliminar(evea);
 		controlhelper.cerrar();
-		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();}
+		
 		
 	}
 
