@@ -25,16 +25,25 @@ public class InstitucionInsertar extends Activity {
 
 	public void insertarInstitucion(View v) 
 	{
-		String cinstitucion=editCodigoInst.getText().toString();
-		String ninstitucion=editNombreInst.getText().toString();
-		String regInsertados;
-		Institucion institucion=new Institucion();
-		institucion.setIdindtitucion(Integer.parseInt(cinstitucion));
-		institucion.setNombreinstitucion(ninstitucion);
-		helper.abrir();
-		regInsertados=helper.insertar(institucion);
-		helper.cerrar();
-		Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+		if(editCodigoInst.getText().toString().equals("")||editNombreInst.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editCodigoInst.setText("");
+			editNombreInst.setText("");
+		}
+		else
+		{
+			String cinstitucion=editCodigoInst.getText().toString();
+			String ninstitucion=editNombreInst.getText().toString();
+			String regInsertados;
+			Institucion institucion=new Institucion();
+			institucion.setIdindtitucion(Integer.parseInt(cinstitucion));
+			institucion.setNombreinstitucion(ninstitucion);
+			helper.abrir();
+			regInsertados=helper.insertar(institucion);
+			helper.cerrar();
+			Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+		}
 	}
 	public void limpiarTexto(View v) 
 	{

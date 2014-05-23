@@ -24,13 +24,22 @@ public class InstitucionModificar extends Activity {
 
 	public void actualizarInstitucion(View v) 
 	{
-		Institucion institucion = new Institucion();
-		institucion.setIdindtitucion(Integer.parseInt(editMCInst.getText().toString()));
-		institucion.setNombreinstitucion(editMNInst.getText().toString());
-		helper.abrir();
-		String estado = helper.actualizar(institucion);
-		helper.cerrar();
-		Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+		if(editMCInst.getText().toString().equals("")||editMNInst.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editMCInst.setText("");
+			editMNInst.setText("");
+		}
+		else
+		{
+			Institucion institucion = new Institucion();
+			institucion.setIdindtitucion(Integer.parseInt(editMCInst.getText().toString()));
+			institucion.setNombreinstitucion(editMNInst.getText().toString());
+			helper.abrir();
+			String estado = helper.actualizar(institucion);
+			helper.cerrar();
+			Toast.makeText(this, estado, Toast.LENGTH_SHORT).show();
+		}
 	}
 	public void limpiarTexto(View v) 
 	{

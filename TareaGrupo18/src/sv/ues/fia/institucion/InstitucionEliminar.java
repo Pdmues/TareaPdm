@@ -22,12 +22,20 @@ public class InstitucionEliminar extends Activity {
 
 	public void eliminarInstitucion(View v)
 	{
-		String regEliminadas;
-		Institucion institucion=new Institucion();
-		institucion.setIdindtitucion(Integer.parseInt(editECInst.getText().toString()));
-		controlhelper.abrir();
-		regEliminadas=controlhelper.eliminar(institucion);
-		controlhelper.cerrar();
-		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		if(editECInst.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editECInst.setText("");
+		}
+		else
+		{
+			String regEliminadas;
+			Institucion institucion=new Institucion();
+			institucion.setIdindtitucion(Integer.parseInt(editECInst.getText().toString()));
+			controlhelper.abrir();
+			regEliminadas=controlhelper.eliminar(institucion);
+			controlhelper.cerrar();
+			Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		}
 	}
 }

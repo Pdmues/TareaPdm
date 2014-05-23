@@ -25,16 +25,25 @@ public class InstitucionConsultar extends Activity {
 
 	public void consultarInstitucion(View v) 
 	{
-		helper.abrir();
-		Institucion institu=helper.consultarInstitucion(editCInst.getText().toString());
-		helper.cerrar();
-		if(institu == null)
-		Toast.makeText(this, "La institucion con codigo " +
-				editCInst.getText().toString() +
-		" no encontrado", Toast.LENGTH_LONG).show();
+		if(editCInst.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Campos vacios", Toast.LENGTH_LONG).show();
+			editCInst.setText("");
+			editNInst.setText("");
+		}
 		else
 		{
-			editNInst.setText(institu.getNombreinstitucion().toString());
+			helper.abrir();
+			Institucion institu=helper.consultarInstitucion(editCInst.getText().toString());
+			helper.cerrar();
+			if(institu == null)
+			Toast.makeText(this, "La institucion con codigo " +
+					editCInst.getText().toString() +
+			" no encontrado", Toast.LENGTH_LONG).show();
+			else
+			{
+				editNInst.setText(institu.getNombreinstitucion().toString());
+			}
 		}
 	}
 	public void limpiarTexto(View v)
