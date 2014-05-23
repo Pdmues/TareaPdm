@@ -21,7 +21,7 @@ public class FacultadModificar extends Activity {
 		editNMfacu = (EditText) findViewById(R.id.editNFacu);
  }
 
-public void actualizarCarrera(View v) 
+public void actualizarFacultad(View v) 
 	{
 		Facultad facultad = new Facultad();
 		facultad.setIDfacultad(editIDfacu.getText().toString());

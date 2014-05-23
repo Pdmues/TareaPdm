@@ -125,7 +125,7 @@ public class ControladorBDG18
 				//Registro de carrera	
 				db.execSQL("create table CARRERA"+ 
 						"("+
-						   "IDCARRERA  		       VARCHAR2(15)              not null PRIMARY KEY,"+
+						   "IDCARRERA  		       VARCHAR2(15)         not null PRIMARY KEY,"+
 						   "NOMBCARRERA            VARCHAR2(50)         not null"+
 						   "IDFACULTAD				VARCHAR2(50)		not null"+				
 						");");
@@ -143,7 +143,7 @@ public class ControladorBDG18
 				//Registro de facultad
 				db.execSQL("create table FACULTAD"+ 
 						"("+
-						   "IDFACULTAD  		    VARCHAR2(50)          not null PRIMARY KEY,"+
+						   "IDFACULTAD  		    VARCHAR2(50)         not null PRIMARY KEY,"+
 						   "NOMBFACULTAD            VARCHAR2(50)         not null"+
 						 ");");
 

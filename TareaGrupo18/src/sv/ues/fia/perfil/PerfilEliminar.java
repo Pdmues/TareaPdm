@@ -4,6 +4,7 @@ import sv.ues.fia.R;
 import sv.ues.fia.perfil.Perfil;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,12 +23,15 @@ protected void onCreate(Bundle savedInstanceState) {
 
 public void eliminarPerfil(View v)
 {
+	if(TextUtils.isEmpty(editEper.getText().toString()))
+		Toast.makeText(this, "El Campo esta vacio", Toast.LENGTH_SHORT).show();
+	else{
 		String regEliminadas;
 		Perfil perfil = new Perfil();
 		perfil.setNperfil1(Integer.parseInt(editEper.getText().toString()));
 		controlhelper.abrir();
 		regEliminadas=controlhelper.eliminar(perfil);
 		controlhelper.cerrar();
-		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();}
 	}
 }

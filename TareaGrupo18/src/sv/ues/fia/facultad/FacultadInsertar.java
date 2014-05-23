@@ -22,7 +22,7 @@ public class FacultadInsertar extends Activity {
 		editNfacu = (EditText) findViewById(R.id.editIFNomb);
 	}
 
-	public void insertarfacultad(View v) 
+	public void insertarFacultad(View v) 
 	{
 		String CFacultad= editIdfacu.getText().toString();
 		String NFacultad= editNfacu.getText().toString();
