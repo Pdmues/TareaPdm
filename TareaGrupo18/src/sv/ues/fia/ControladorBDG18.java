@@ -126,7 +126,7 @@ public class ControladorBDG18
 				db.execSQL("create table CARRERA"+ 
 						"("+
 						   "IDCARRERA  		       VARCHAR2(15)         not null PRIMARY KEY,"+
-						   "NOMBCARRERA            VARCHAR2(50)         not null"+
+						   "NOMBCARRERA            VARCHAR2(50)         not null,"+
 						   "IDFACULTAD				VARCHAR2(50)		not null"+				
 						");");
 				
@@ -134,9 +134,9 @@ public class ControladorBDG18
 				db.execSQL("create table PERFIL"+ 
 						"("+
 						   "NPERFIL  		 INTEGER           not null PRIMARY KEY,"+
-						   "NGRUPO			 VARCHAR2(10)			not null"+		
+						   "NGRUPO			 VARCHAR2(10)			not null,"+		
 						   "ESTADO            	VARCHAR2(10)         not null,"+
-						   "OBSERVACIONES		VARCHAR2(50)		 not null"+
+						   "OBSERVACIONES		VARCHAR2(50)		 not null,"+
 						   "IDINSTITUCION		INTEGER					not null"+	
 						");");
 				
