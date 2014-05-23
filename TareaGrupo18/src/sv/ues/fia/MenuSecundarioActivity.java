@@ -56,8 +56,6 @@ public class MenuSecundarioActivity extends Activity implements OnClickListener{
 		    		"Tabla Registro de Bitacora",
 		    		"Tabla Tipo de Especialidad",
 		    		"Tabla de apertura Bitacora",
-		    		"Tabla Tipo Especialidad",
-		    		"Tabla Bitacora",
 		    		"Tabla Etapa",
 		    		"Tabla Evaluacion Etapa"
 		       };
