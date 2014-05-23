@@ -404,7 +404,7 @@ public String insertar(Perfil perfil)
 	per.put("ESTADO", perfil.getEstado());
 	per.put("OBSERVACIONES",perfil.getObservaciones());
 	per.put("NGRUPO",perfil.getNgrupo());
-	per.put("IDINSTITUCION",perfil.getIdinstitucion());
+	per.put("IDISTITUCION",perfil.getIdinstitucion());
 	contador=db.insert("PERFIL", null, per);
 	if(contador==-1 || contador==0)
 	{
