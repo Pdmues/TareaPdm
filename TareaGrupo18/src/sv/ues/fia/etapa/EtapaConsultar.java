@@ -4,6 +4,7 @@ import sv.ues.fia.ControladorBDG18;
 import sv.ues.fia.R;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,20 +25,23 @@ public class EtapaConsultar extends Activity {
 		fechamodificar=(EditText)findViewById(R.id.editfechaconsultaretapa);
 	}
 
-public void consultaretapa(View v)
-{
-	helper.abrir();
-	Etapa e=helper.consultaretapa(numeroetapamodificar.getText().toString());
-	helper.cerrar();
-	if(e==null)
+	public void consultaretapa(View v)
 	{
-		Toast.makeText(this,"La etapa con numero"+numeroetapamodificar.getText().toString()+" no se ha encontrado", Toast.LENGTH_LONG).show();
+		if(TextUtils.isEmpty((numeroetapamodificar.getText().toString()))||TextUtils.isEmpty(numerotgmodificar.getText().toString())||TextUtils.isEmpty(fechamodificar.getText().toString()))
+		{Toast.makeText(this, "Existe Campo vacio", Toast.LENGTH_SHORT).show();}
+		else{	
+		helper.abrir();
+		Etapa e=helper.consultaretapa(numeroetapamodificar.getText().toString());
+		helper.cerrar();
+		if(e==null)
+		{
+			Toast.makeText(this,"La etapa con numero"+numeroetapamodificar.getText().toString()+" no se ha encontrado", Toast.LENGTH_LONG).show();
+		}
+		else{
+		numerotgmodificar.setText(e.getNTG().toString());
+		fechamodificar.setText(e.getFecha().toString());
+		}}
 	}
-	else{
-	numerotgmodificar.setText(e.getNTG().toString());
-	fechamodificar.setText(e.getFecha().toString());
-	}
-}
 public void limpiarconsultaretapa(View v)
 {
 	numeroetapamodificar.setText("");
